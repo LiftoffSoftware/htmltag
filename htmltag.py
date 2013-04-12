@@ -31,6 +31,13 @@ To add attributes inside your tag just pass them as keyword arguments::
     >>> print(a('awesome software', href='http://liftoffsoftware.com/'))
     <a href="http://liftoffsoftware.com/">awesome software</a>
 
+To work around the problem of reserved words as keyword arguments (i.e. can't
+have 'class="foo"') just prefix the keyword with an underscore like so::
+
+    >>> from htmltag import div
+    >>> print(div("example", _class="someclass"))
+    <div class="someclass">example</div>
+
 You can combine multiple tags to create a larger HTML string like so::
 
     >>> from htmltag import table, tr, td
@@ -103,6 +110,8 @@ class TagWrap(object):
         if kwargs:
             tagstart += ' '
             for key, value in kwargs.items():
+                if key.startswith('_'):
+                    key = key.lstrip('_')
                 tagstart = tagstart + '{key}="{value}" '.format(
                     key=key, value=value)
             tagstart = tagstart.rstrip()
