@@ -5,8 +5,8 @@
 # For license information see LICENSE.txt
 
 # Meta
-__version__ = '1.1.0'
-__version_info__ = (1, 1, 0)
+__version__ = '1.2.0'
+__version_info__ = (1, 2, 0)
 __license__ = "Apache 2.0"
 __author__ = 'Dan McDougall <daniel.mcdougall@liftoffsoftware.com>'
 
@@ -59,14 +59,13 @@ try Tornado's template engine (http://www.tornadoweb.org/en/stable/template.html
 Special Characters
 ------------------
 Special characters that cause trouble like, '<', '>', and '&' will be
-automatically converted into HTML entities.  If you are passing a string that
-already has these entities escaped and don't want them double-escaped just wrap
-your string in :class:`htmltag.Escaped` like so::
+automatically converted into HTML entities.  If you don't want that to happen
+just wrap your string in :class:`htmltag.HTML` like so::
 
-    >>> from htmltag import Escaped, a
-    >>> txt = Escaped("<strong>I am already escaped. Don't escape me!</strong>")
+    >>> from htmltag import HTML, a
+    >>> txt = HTML("<strong>I am already HTML. Don't escape me!</strong>")
     >>> a(txt, href="http://liftoffsoftware.com/")
-    '<a href="http://liftoffsoftware.com/"><strong>I am already escaped. Don\\'t escape me!</strong></a>'
+    '<a href="http://liftoffsoftware.com/"><strong>I am already HTML. Don\\'t escape me!</strong></a>'
 
 By default self-closing HTML tags like '<img>' will not include an ending slash.
 To change this behavior (i.e. for XHTML) just set 'ending_slash' to `True`::
@@ -118,7 +117,7 @@ contained therein will automatically be replaced::
     >>> from htmltag import span
     >>> whitelist = ['span', 'b', 'i', 'strong']
     >>> span.whitelist = whitelist
-    >>> span(Escaped('This is <b>bold</b> new lib is <script>awesome();</script>'))
+    >>> span(HTML('This is <b>bold</b> new lib is <script>awesome();</script>'))
     '<span>This is <b>bold</b> new lib is (removed)awesome();(removed)</span>'
 """
 
@@ -134,8 +133,11 @@ def strip_xss(html, whitelist=None, replacement="(removed)"):
     """
     This function returns a tuple containing:
 
-        * *html* with all non-whitelisted HTML tags replaced with *replacement*.  Any tags that contain JavaScript, VBScript, or other known XSS/executable functions will also be removed.
-        * A list containing the tags that were removed.
+        * *html* with all non-whitelisted HTML tags replaced with *replacement*.
+        * A `set()` containing the tags that were removed.
+
+    Any tags that contain JavaScript, VBScript, or other known XSS/executable
+    functions will also be removed.
 
     If *whitelist* is not given the following will be used::
 
@@ -168,10 +170,16 @@ def strip_xss(html, whitelist=None, replacement="(removed)"):
 
         >>> html = '<span>Hello, exploit: <img src="javascript:alert(\"pwned!\")"></span>'
         >>> html, rejects = strip_xss(html, replacement="entities")
-        >>> print("'%s', Rejected: '%s'" % (html, " ".join(rejects)))
-        '<span>Hello, exploit: &lt;img src="javascript:alert("pwned!")"&gt;</span>', Rejected: '<img src="javascript:alert("pwned!")">'
+        >>> print(html)
+        <span>Hello, exploit: &lt;img src="javascript:alert("pwned!")"&gt;</span>
+        >>> print("Rejected: '%s'" % ", ".join(rejects))
+        Rejected: '<img src="javascript:alert("pwned!")">'
 
-    .. note:: This function should work to protect against *all* `the XSS examples at OWASP <https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet>`_.  Please `let us know <https://github.com/liftoff/GateOne/issues>`_ if you find something we missed.
+    **NOTE:** This function should work to protect against *all* `the XSS
+    examples at OWASP
+    <https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet>`_.  Please
+    `let us know <https://github.com/LiftoffSoftware/htmltag/issues>`_ if you
+    find something we missed.
     """
     re_html_tag = re.compile( # This matches HTML tags (if used correctly)
       "(?i)<\/?\w+((\s+\w+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>")
@@ -229,24 +237,49 @@ def strip_xss(html, whitelist=None, replacement="(removed)"):
             html = html.replace(bad_tag, replacement)
     return (html, bad_tags)
 
-class Escaped(str):
+class HTML(str):
     """
+    .. versionadded:: 1.2.0
+
     A subclass of Python's built-in `str` to add a simple `__html__` method
     that lets us know this string has already been escaped.
     """
     def __html__(self):
+        """
+        Returns `self` (we're already a string) in unmodified form.
+        """
         return self
+
+    @property
+    def escaped(self):
+        """
+        A property that returns `self` with all characters that have special
+        meaning (in HTML/XML) replaced with HTML entities.  Example::
+
+            >>> print(HTML('<span>These span tags will be escaped</span>').escaped)
+            &lt;span&gt;These span tags will be escaped&lt;/span&gt;
+        """
+        return cgi.escape(self).encode(
+            'ascii', 'xmlcharrefreplace').decode('ascii')
 
 class TagWrap(object):
     """
     Lets you wrap whatever string you want in whatever tag you want.  Supports a
     number of options:
 
-        :param safe_mode: If `True` dangerous (XSS) content will be removed from all HTML.  Defaults to `True`
-        :param whitelist: If given (iterable) only tags that exist in the whitelist will be allowed.  All else will be escaped into HTML entities.
-        :param replacement: A string to replace unsafe HTML with.  If set to "entities", will convert unsafe tags to HTML entities so they display as-is but won't be evaluated by renderers/browsers'.  The defaults is "(removed)".
-        :param log_rejects: If `True` rejected unsafe (XSS) HTML will be logged using :meth:`logging.error`.  Defaults to `False`
-        :param ending_slash: If `True` self-closing HTML tags like '<img>' will not have a '/' placed before the '>'.  Usually only necessary with XHTML documents (as opposed to HTML4 or HTML5).  Defaults to `False`.
+        :param safe_mode: If `True` dangerous (XSS) content will be removed \
+        from all HTML.  Defaults to `True`
+        :param whitelist: If given (iterable) only tags that exist in the \
+        whitelist will be allowed.  All else will be escaped into HTML entities.
+        :param replacement: A string to replace unsafe HTML with.  If set to \
+        "entities", will convert unsafe tags to HTML entities so they display \
+        as-is but won't be evaluated by renderers/browsers'.  The defaults is \
+        "(removed)".
+        :param log_rejects: If `True` rejected unsafe (XSS) HTML will be logged\
+        using :meth:`logging.error`.  Defaults to `False`
+        :param ending_slash: If `True` self-closing HTML tags like '<img>' will\
+        not have a '/' placed before the '>'.  Usually only necessary with \
+        XHTML documents (as opposed to HTML4 or HTML5).  Defaults to `False`.
     """
     def __init__(self, tagname, **kwargs):
         self.tagname = tagname
@@ -262,7 +295,7 @@ class TagWrap(object):
         Converts '<', '>', and '&' into HTML entities.
         """
         html_entities = {"&": "&amp;", '<': '&lt;', '>': '&gt;'}
-        return Escaped("".join(html_entities.get(c, c) for c in string))
+        return HTML("".join(html_entities.get(c, c) for c in string))
 
     def wrap(self, tag, *args, **kwargs):
         """
@@ -278,7 +311,9 @@ class TagWrap(object):
             >>> print(a('awesome software', href='http://liftoffsoftware.com/'))
             <a href="http://liftoffsoftware.com/">awesome software</a>
 
-        .. note:: Will automatically convert '<', '>', and '&' into HTML entities.
+        .. note::
+
+            Will automatically convert '<', '>', and '&' into HTML entities.
         """
         template = "<{tagstart}>{content}</{tag}>"
         if tag in self_closing_tags:
@@ -307,7 +342,7 @@ class TagWrap(object):
                 logging.error(
                     "{name} rejected unsafe HTML: '{rejected}'".format(
                     name=self.__class__.__name__, rejected=rejected))
-        return Escaped(html)
+        return HTML(html)
 
     def __call__(self, *args, **kwargs):
         return self.wrap(self.tagname, *args, **kwargs)
@@ -333,7 +368,7 @@ class SelfWrap(ModuleType):
         # This is necessary for reload() to work and so we don't overwrite
         # these values with instances of TagWrap:
         no_override = [
-            'Escaped', 'SelfWrap', 'strip_xss', '__author__', '__builtins__',
+            'HTML', 'SelfWrap', 'strip_xss', '__author__', '__builtins__',
             '__doc__', '__license__', '__name__', '__package__', '__version__',
             '__version_info__'
         ]

@@ -46,14 +46,13 @@ try Tornado's template engine (http://www.tornadoweb.org/en/stable/template.html
 Special Characters
 ------------------
 Special characters that cause trouble like, '<', '>', and '&' will be
-automatically converted into HTML entities.  If you are passing a string that
-already has these entities escaped and don't want them double-escaped just wrap
-your string in :class:`htmltag.Escaped` like so::
+automatically converted into HTML entities.  If you don't want that to happen
+just wrap your string in :class:`htmltag.HTML` like so::
 
-    >>> from htmltag import Escaped, a
-    >>> txt = Escaped("<strong>I am already escaped. Don't escape me!</strong>")
+    >>> from htmltag import HTML, a
+    >>> txt = HTML("<strong>I am already HTML. Don't escape me!</strong>")
     >>> a(txt, href="http://liftoffsoftware.com/")
-    '<a href="http://liftoffsoftware.com/"><strong>I am already escaped. Don\'t escape me!</strong></a>'
+    '<a href="http://liftoffsoftware.com/"><strong>I am already HTML. Don\'t escape me!</strong></a>'
 
 By default self-closing HTML tags like '<img>' will not include an ending slash.
 To change this behavior (i.e. for XHTML) just set 'ending_slash' to `True`::
@@ -105,5 +104,5 @@ contained therein will automatically be replaced::
     >>> from htmltag import span
     >>> whitelist = ['span', 'b', 'i', 'strong']
     >>> span.whitelist = whitelist
-    >>> span(Escaped('This is <b>bold</b> new lib is <script>awesome();</script>'))
+    >>> span(HTML('This is <b>bold</b> new lib is <script>awesome();</script>'))
     '<span>This is <b>bold</b> new lib is (removed)awesome();(removed)</span>'
