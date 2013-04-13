@@ -51,7 +51,7 @@ You can combine multiple tags to create a larger HTML string like so::
     ... ))
     <table><tr id="row1"><td>100</td><td>200</td></tr><tr id="row2"><td>150</td><td>250</td></tr></table>
 
-.. note:: If you're going to do something like the above please use a *real* template language/module instead of `htmltag`.  You're *probably* "doing it wrong" if you end up with something like the above in your code.  For example, try Tornado's template engine (http://www.tornadoweb.org/en/stable/template.html).
+**NOTE:** If you're going to do something like the above please use a *real* template language/module instead of `htmltag`.  You're *probably* "doing it wrong" if you end up with something like the above in your code.  For example, try Tornado's template engine (http://www.tornadoweb.org/en/stable/template.html).
 
 Special Characters
 ------------------
