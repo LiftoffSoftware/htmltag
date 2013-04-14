@@ -1,5 +1,7 @@
 The htmltag module
 ==================
+.. note:: The latest, complete documentation of htmltag can be found here: http://liftoff.github.io/htmltag/
+
 htmltag.py - A Python (2 *and* 3) module for wrapping whatever strings you want
 in HTML tags. Example::
 
