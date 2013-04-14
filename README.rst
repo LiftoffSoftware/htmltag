@@ -7,8 +7,8 @@ in HTML tags. Example::
     >>> print(strong("SO STRONG!"))
     <strong>SO STRONG!</strong>
 
-What tags are supported?  All of them!  An important facet of HTML5 is the
-ability to use your own custom tags.  For example::
+What tags are supported?  All of them!  An important facet of modern web
+programming is the ability to use your own custom tags.  For example::
 
     >>> from htmltag import foobar
     >>> foobar('Custom tag example')
@@ -27,6 +27,15 @@ have 'class="foo"') just prefix the keyword with an underscore like so::
     >>> print(div("example", _class="someclass"))
     <div class="someclass">example</div>
 
+Another option--which is useful for things like 'data-\*' attributes--is to pass
+keyword arguments as a dict using the `\*\* operator
+<http://docs.python.org/2/tutorial/controlflow.html#unpacking-argument-lists>`_
+like so::
+
+    >>> from htmltag import li
+    >>> print(li("CEO", **{"class": "user", "data-name": "Dan McDougall"}))
+    <li class="user" data-name="Dan McDougall">CEO</li>
+
 Combining Tags and Content
 --------------------------
 You can combine multiple tags to create a larger HTML string like so::
@@ -41,7 +50,8 @@ You can combine multiple tags to create a larger HTML string like so::
 **NOTE:** If you're going to do something like the above please use a *real*
 template language/module instead of `htmltag`.  You're *probably* "doing it
 wrong" if you end up with something like the above in your code.  For example,
-try Tornado's template engine (http://www.tornadoweb.org/en/stable/template.html).
+try `Tornado's template engine
+<http://www.tornadoweb.org/en/stable/template.html>`_.
 
 Special Characters
 ------------------
@@ -106,3 +116,21 @@ contained therein will automatically be replaced::
     >>> span.whitelist = whitelist
     >>> span(HTML('This is <b>bold</b> new lib is <script>awesome();</script>'))
     '<span>This is <b>bold</b> new lib is (removed)awesome();(removed)</span>'
+
+Lastly, all strings returned by `htmltag` are actually a subclass of `str`:
+`~htmltag.HTML`.  It has a useful `escaped` property:
+
+    >>> from htmltag import address
+    >>> address.safe_mode = False # Turn off so we have a dangerous example ;)
+    >>> html = address('1 Hacker Ln., Nowhere, USA')
+    >>> print(html)
+    <address>1 Hacker Ln., Nowhere, USA</address>
+    >>> print(html.escaped)
+    &lt;address&gt;1 Hacker Ln., Nowhere, USA&lt;/address&gt;
+
+This can be extremely useful if you want to be double-sure that no executable
+stuff ends up in your program's output.
+
+
+Functions and Classes
+=====================
