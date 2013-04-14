@@ -359,7 +359,6 @@ class TagWrap(object):
     # NOTE: The above doctest is skipped because it only works in reality :)
     def __init__(self, tagname, **kwargs):
         self.tagname = tagname
-        self.kwargs = kwargs # For copying later
         self.safe_mode = kwargs.get('safe_mode', True)
         self.whitelist = kwargs.get('whitelist', "off")
         self.replacement = kwargs.get('replacement', '(removed)')
@@ -427,7 +426,13 @@ class TagWrap(object):
         all the same attributes as this instance.  If *kwargs* is given they
         will override the attributes of the created instance.
         """
-        new_kwargs = self.kwargs.copy()
+        new_kwargs = {
+            'replacement': self.replacement,
+            'whitelist': self.whitelist,
+            'safe_mode': self.safe_mode,
+            'log_rejects': self.log_rejects,
+            'ending_slash': self.ending_slash
+        }
         new_kwargs.update(**kwargs)
         return TagWrap(tagname, **new_kwargs)
 
