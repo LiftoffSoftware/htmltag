@@ -5,8 +5,8 @@
 # For license information see LICENSE.txt
 
 # Meta
-__version__ = '1.3'
-__version_info__ = (1, 3)
+__version__ = '1.4'
+__version_info__ = (1, 4)
 __license__ = "Apache 2.0"
 __author__ = 'Dan McDougall <daniel.mcdougall@liftoffsoftware.com>'
 
