@@ -5,8 +5,8 @@
 # For license information see LICENSE.txt
 
 # Meta
-__version__ = '1.2.0'
-__version_info__ = (1, 2, 0)
+__version__ = '1.3'
+__version_info__ = (1, 3)
 __license__ = "Apache 2.0"
 __author__ = 'Dan McDougall <daniel.mcdougall@liftoffsoftware.com>'
 
@@ -20,8 +20,8 @@ in HTML tags. Example::
     >>> print(strong("SO STRONG!"))
     <strong>SO STRONG!</strong>
 
-What tags are supported?  All of them!  An important facet of HTML5 is the
-ability to use your own custom tags.  For example::
+What tags are supported?  All of them!  An important facet of modern web
+programming is the ability to use your own custom tags.  For example::
 
     >>> from htmltag import foobar
     >>> foobar('Custom tag example')
@@ -40,6 +40,15 @@ have 'class="foo"') just prefix the keyword with an underscore like so::
     >>> print(div("example", _class="someclass"))
     <div class="someclass">example</div>
 
+Another option--which is useful for things like 'data-\*' attributes--is to pass
+keyword arguments as a dict using the `\*\* operator
+<http://docs.python.org/2/tutorial/controlflow.html#unpacking-argument-lists>`_
+like so::
+
+    >>> from htmltag import li
+    >>> print(li("CEO", **{"class": "user", "data-name": "Dan McDougall"}))
+    <li class="user" data-name="Dan McDougall">CEO</li>
+
 Combining Tags and Content
 --------------------------
 You can combine multiple tags to create a larger HTML string like so::
@@ -54,7 +63,8 @@ You can combine multiple tags to create a larger HTML string like so::
 **NOTE:** If you're going to do something like the above please use a *real*
 template language/module instead of `htmltag`.  You're *probably* "doing it
 wrong" if you end up with something like the above in your code.  For example,
-try Tornado's template engine (http://www.tornadoweb.org/en/stable/template.html).
+try `Tornado's template engine
+<http://www.tornadoweb.org/en/stable/template.html>`_.
 
 Special Characters
 ------------------
@@ -119,6 +129,24 @@ contained therein will automatically be replaced::
     >>> span.whitelist = whitelist
     >>> span(HTML('This is <b>bold</b> new lib is <script>awesome();</script>'))
     '<span>This is <b>bold</b> new lib is (removed)awesome();(removed)</span>'
+
+Lastly, all strings returned by `htmltag` are actually a subclass of `str`:
+`~htmltag.HTML`.  It has a useful `escaped` property:
+
+    >>> from htmltag import address
+    >>> address.safe_mode = False # Turn off so we have a dangerous example ;)
+    >>> html = address('1 Hacker Ln., Nowhere, USA')
+    >>> print(html)
+    <address>1 Hacker Ln., Nowhere, USA</address>
+    >>> print(html.escaped)
+    &lt;address&gt;1 Hacker Ln., Nowhere, USA&lt;/address&gt;
+
+This can be extremely useful if you want to be double-sure that no executable
+stuff ends up in your program's output.
+
+
+Functions and Classes
+=====================
 """
 
 import sys, re, cgi, logging
@@ -128,6 +156,7 @@ self_closing_tags = set([
     'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input',
     'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr',
 ])
+FILE = __file__
 
 def strip_xss(html, whitelist=None, replacement="(removed)"):
     """
@@ -242,7 +271,9 @@ class HTML(str):
     .. versionadded:: 1.2.0
 
     A subclass of Python's built-in `str` to add a simple `__html__` method
-    that lets us know this string has already been escaped.
+    that lets us know this string is HTML and does not need to be escaped.  It
+    also has an `escaped` property that will return `self` with all special
+    characters converted into HTML entities.
     """
     def __html__(self):
         """
@@ -267,22 +298,57 @@ class TagWrap(object):
     Lets you wrap whatever string you want in whatever tag you want.  Supports a
     number of options:
 
-        :param safe_mode: If `True` dangerous (XSS) content will be removed \
+        :keyword safe_mode: If `True` dangerous (XSS) content will be removed \
         from all HTML.  Defaults to `True`
-        :param whitelist: If given (iterable) only tags that exist in the \
+        :keyword whitelist: If given (iterable) only tags that exist in the \
         whitelist will be allowed.  All else will be escaped into HTML entities.
-        :param replacement: A string to replace unsafe HTML with.  If set to \
+        :keyword replacement: A string to replace unsafe HTML with.  If set to \
         "entities", will convert unsafe tags to HTML entities so they display \
         as-is but won't be evaluated by renderers/browsers'.  The defaults is \
         "(removed)".
-        :param log_rejects: If `True` rejected unsafe (XSS) HTML will be logged\
-        using :meth:`logging.error`.  Defaults to `False`
-        :param ending_slash: If `True` self-closing HTML tags like '<img>' will\
-        not have a '/' placed before the '>'.  Usually only necessary with \
+        :keyword log_rejects: If `True` rejected unsafe (XSS) HTML will be \
+        logged using :meth:`logging.error`.  Defaults to `False`
+        :keyword ending_slash: If `True` self-closing HTML tags like '<img>' \
+        will not have a '/' placed before the '>'.  Usually only necessary with\
         XHTML documents (as opposed to HTML4 or HTML5).  Defaults to `False`.
+
+    The `TagWrap` class may be used in a direct fashion (as opposed to the
+    metaprogramming magic way: ``from htmltag import sometag``)::
+
+        >>> from htmltag import TagWrap
+        >>> img = TagWrap('img', ending_slash=True)
+        >>> print(img(src="http://company.com/someimage.png"))
+        <img src="http://company.com/someimage.png" />
+
+    The `TagWrap` class also has a :meth:`~TagWrap.copy` method which can be
+    useful when you want a new tag to have the same attributes as another::
+
+        >>> from htmltag import TagWrap
+        >>> whitelist = ["b", "i", "strong", "a", "em"]
+        >>> replacement = "(tag not allowed)"
+        >>> b = TagWrap('b', whitelist=whitelist, replacement=replacement)
+        >>> i = b.copy('i')
+        >>> print(i.whitelist)
+        ['b', 'i', 'strong', 'a', 'em']
+
+    Here's how you can create a number of tags with your own custom settings all
+    at once::
+
+        >>> import sys
+        >>> from htmltag import TagWrap
+        >>> whitelist = ["b", "i", "strong", "a", "em"] # Whitelist ourselves
+        >>> replacement = "(tag not allowed)"
+        >>> for tag in whitelist:
+        ...     setattr(sys.modules[__name__], tag,
+        ...         TagWrap(tag, whitelist=whitelist, replacement=replacement))
+        print(strong.replacement)
+        (tag not allowed)
+
+    .. note:: ``sys.modules[__name__]`` is the current module; "the global `self`".
     """
     def __init__(self, tagname, **kwargs):
         self.tagname = tagname
+        self.kwargs = kwargs # For copying later
         self.safe_mode = kwargs.get('safe_mode', True)
         self.whitelist = kwargs.get('whitelist', "off")
         self.replacement = kwargs.get('replacement', '(removed)')
@@ -292,28 +358,29 @@ class TagWrap(object):
 
     def escape(self, string):
         """
-        Converts '<', '>', and '&' into HTML entities.
+        Returns *string* with all instances of '<', '>', and '&' converted into
+        HTML entities.
         """
         html_entities = {"&": "&amp;", '<': '&lt;', '>': '&gt;'}
         return HTML("".join(html_entities.get(c, c) for c in string))
 
     def wrap(self, tag, *args, **kwargs):
         """
-        Returns *string* wrapped in HTML tags like so::
+        Returns all *args* (strings) wrapped in HTML tags like so::
 
             >>> b = TagWrap('b')
             >>> print(b('bold text'))
             <b>bold text</b>
 
-        To add attributes to the tag you can pass them as keyword args:
+        To add attributes to the tag you can pass them as keyword arguments::
 
             >>> a = TagWrap('a')
             >>> print(a('awesome software', href='http://liftoffsoftware.com/'))
             <a href="http://liftoffsoftware.com/">awesome software</a>
 
-        .. note::
-
-            Will automatically convert '<', '>', and '&' into HTML entities.
+        .. note:: :meth:`~TagWrap.wrap` will automatically convert '<', '>', \
+        and '&' into HTML entities unless the wrapped string has an `__html__` \
+        method
         """
         template = "<{tagstart}>{content}</{tag}>"
         if tag in self_closing_tags:
@@ -329,8 +396,7 @@ class TagWrap(object):
         if kwargs:
             tagstart += ' '
             for key, value in kwargs.items():
-                if key.startswith('_'):
-                    key = key.lstrip('_')
+                key = key.lstrip('_')
                 tagstart = tagstart + '{key}="{value}" '.format(
                     key=key, value=value)
             tagstart = tagstart.rstrip()
@@ -344,10 +410,22 @@ class TagWrap(object):
                     name=self.__class__.__name__, rejected=rejected))
         return HTML(html)
 
+    def copy(self, tagname, **kwargs):
+        """
+        Returns a new instance of `TagWrap` using the given *tagname* that has
+        all the same attributes as this instance.  If *kwargs* is given they
+        will override the attributes of the created instance.
+        """
+        new_kwargs = self.kwargs.copy()
+        new_kwargs.update(**kwargs)
+        return TagWrap(tagname, **new_kwargs)
+
     def __call__(self, *args, **kwargs):
         return self.wrap(self.tagname, *args, **kwargs)
 
     def __getitem__(self, k):
+        if k == "__all__":
+            raise ImportError("Cannot 'import *' with htmltag.")
         if isinstance(k, str):
             if k.startswith('__') and k.endswith("__"):
                 raise AttributeError
@@ -368,13 +446,14 @@ class SelfWrap(ModuleType):
         # This is necessary for reload() to work and so we don't overwrite
         # these values with instances of TagWrap:
         no_override = [
-            'HTML', 'SelfWrap', 'strip_xss', '__author__', '__builtins__',
-            '__doc__', '__license__', '__name__', '__package__', '__version__',
-            '__version_info__'
+            'HTML', 'SelfWrap', 'TagWrap', 'strip_xss', '__author__',
+            '__builtins__', '__doc__', '__license__', '__name__',
+            '__package__', '__version__', '__version_info__'
         ]
         for attr in no_override:
             setattr(self, attr, getattr(tagname, attr, None))
         self.__path__ = [] # Required for Python 3.3
+        self.__file__ = FILE # Needed for Sphinx docs
 
     def __getattr__(self, name): # "from htmltag import a" <--*name* will be 'a'
         # This is how Python looks up the module name

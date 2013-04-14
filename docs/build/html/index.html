@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>htmltag.py - Safely and intuitively construct HTML tags &mdash; htmltag 1.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.1/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.1/css/bootstrap-responsive.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-2.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="htmltag 1.3 documentation" href="#" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+<div class="container">
+  
+  <div id="navbar" class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="#">htmltag</a>
+      <span class="navbar-text pull-left"><b>1.3</b></span>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="divider-vertical"></li>
+          
+            <li class="dropdown globaltoc-container">
+  <a href="#"
+     class="dropdown-toggle"
+     data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+    ></ul>
+</li>
+            <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">htmltag.py - Safely and intuitively construct HTML tags</a><ul>
+<li><a class="reference internal" href="#the-htmltag-module">The htmltag module</a><ul>
+<li><a class="reference internal" href="#combining-tags-and-content">Combining Tags and Content</a></li>
+<li><a class="reference internal" href="#special-characters">Special Characters</a></li>
+<li><a class="reference internal" href="#protections-against-cross-site-scripting-xss">Protections Against Cross-Site Scripting (XSS)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#functions-and-classes">Functions and Classes</a></li>
+<li><a class="reference internal" href="#strip-xss">strip_xss()</a></li>
+<li><a class="reference internal" href="#html">HTML()</a></li>
+<li><a class="reference internal" href="#tagwrap">TagWrap()</a></li>
+<li><a class="reference internal" href="#selfwrap">SelfWrap()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</ul>
+</li>
+          
+          
+            
+          
+          
+        </ul>
+
+        
+          
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="htmltag-py-safely-and-intuitively-construct-html-tags">
+<h1>htmltag.py - Safely and intuitively construct HTML tags<a class="headerlink" href="#htmltag-py-safely-and-intuitively-construct-html-tags" title="Permalink to this headline">¶</a></h1>
+<p><em>Module author: Dan McDougall &lt;<a class="reference external" href="mailto:daniel&#46;mcdougall&#37;&#52;&#48;liftoffsoftware&#46;com">daniel<span>&#46;</span>mcdougall<span>&#64;</span>liftoffsoftware<span>&#46;</span>com</a>&gt;</em></p>
+<span class="target" id="module-htmltag"></span><div class="section" id="the-htmltag-module">
+<h2>The htmltag module<a class="headerlink" href="#the-htmltag-module" title="Permalink to this headline">¶</a></h2>
+<p>htmltag.py - A Python (2 <em>and</em> 3) module for wrapping whatever strings you want
+in HTML tags. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">strong</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">strong</span><span class="p">(</span><span class="s">&quot;SO STRONG!&quot;</span><span class="p">))</span>
+<span class="go">&lt;strong&gt;SO STRONG!&lt;/strong&gt;</span>
+</pre></div>
+</div>
+<p>What tags are supported?  All of them!  An important facet of modern web
+programming is the ability to use your own custom tags.  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">foobar</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">foobar</span><span class="p">(</span><span class="s">&#39;Custom tag example&#39;</span><span class="p">)</span>
+<span class="go">&#39;&lt;foobar&gt;Custom tag example&lt;/foobar&gt;&#39;</span>
+</pre></div>
+</div>
+<p>To add attributes inside your tag just pass them as keyword arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="s">&#39;awesome software&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s">&#39;http://liftoffsoftware.com/&#39;</span><span class="p">))</span>
+<span class="go">&lt;a href=&quot;http://liftoffsoftware.com/&quot;&gt;awesome software&lt;/a&gt;</span>
+</pre></div>
+</div>
+<p>To work around the problem of reserved words as keyword arguments (i.e. can't
+have 'class=&quot;foo&quot;') just prefix the keyword with an underscore like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">div</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">div</span><span class="p">(</span><span class="s">&quot;example&quot;</span><span class="p">,</span> <span class="n">_class</span><span class="o">=</span><span class="s">&quot;someclass&quot;</span><span class="p">))</span>
+<span class="go">&lt;div class=&quot;someclass&quot;&gt;example&lt;/div&gt;</span>
+</pre></div>
+</div>
+<p>Another option--which is useful for things like 'data-*' attributes--is to pass
+keyword arguments as a dict using the <a class="reference external" href="http://docs.python.org/2/tutorial/controlflow.html#unpacking-argument-lists">** operator</a>
+like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">li</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">li</span><span class="p">(</span><span class="s">&quot;CEO&quot;</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;data-name&quot;</span><span class="p">:</span> <span class="s">&quot;Dan McDougall&quot;</span><span class="p">}))</span>
+<span class="go">&lt;li class=&quot;user&quot; data-name=&quot;Dan McDougall&quot;&gt;CEO&lt;/li&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="combining-tags-and-content">
+<h3>Combining Tags and Content<a class="headerlink" href="#combining-tags-and-content" title="Permalink to this headline">¶</a></h3>
+<p>You can combine multiple tags to create a larger HTML string like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">tr</span><span class="p">,</span> <span class="n">td</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">table</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">tr</span><span class="p">(</span><span class="n">td</span><span class="p">(</span><span class="s">&#39;100&#39;</span><span class="p">),</span> <span class="n">td</span><span class="p">(</span><span class="s">&#39;200&#39;</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s">&quot;row1&quot;</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">tr</span><span class="p">(</span><span class="n">td</span><span class="p">(</span><span class="s">&#39;150&#39;</span><span class="p">),</span> <span class="n">td</span><span class="p">(</span><span class="s">&#39;250&#39;</span><span class="p">),</span> <span class="nb">id</span><span class="o">=</span><span class="s">&quot;row2&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">))</span>
+<span class="go">&lt;table&gt;&lt;tr id=&quot;row1&quot;&gt;&lt;td&gt;100&lt;/td&gt;&lt;td&gt;200&lt;/td&gt;&lt;/tr&gt;&lt;tr id=&quot;row2&quot;&gt;&lt;td&gt;150&lt;/td&gt;&lt;td&gt;250&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</span>
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> If you're going to do something like the above please use a <em>real</em>
+template language/module instead of <a class="reference internal" href="#module-htmltag" title="htmltag"><tt class="xref py py-obj docutils literal"><span class="pre">htmltag</span></tt></a>.  You're <em>probably</em> &quot;doing it
+wrong&quot; if you end up with something like the above in your code.  For example,
+try <a class="reference external" href="http://www.tornadoweb.org/en/stable/template.html">Tornado's template engine</a>.</p>
+</div>
+<div class="section" id="special-characters">
+<h3>Special Characters<a class="headerlink" href="#special-characters" title="Permalink to this headline">¶</a></h3>
+<p>Special characters that cause trouble like, '&lt;', '&gt;', and '&amp;' will be
+automatically converted into HTML entities.  If you don't want that to happen
+just wrap your string in <a class="reference internal" href="#htmltag.HTML" title="htmltag.HTML"><tt class="xref py py-class docutils literal"><span class="pre">htmltag.HTML</span></tt></a> like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">txt</span> <span class="o">=</span> <span class="n">HTML</span><span class="p">(</span><span class="s">&quot;&lt;strong&gt;I am already HTML. Don&#39;t escape me!&lt;/strong&gt;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">(</span><span class="n">txt</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://liftoffsoftware.com/&quot;</span><span class="p">)</span>
+<span class="go">&#39;&lt;a href=&quot;http://liftoffsoftware.com/&quot;&gt;&lt;strong&gt;I am already HTML. Don\&#39;t escape me!&lt;/strong&gt;&lt;/a&gt;&#39;</span>
+</pre></div>
+</div>
+<p>By default self-closing HTML tags like '&lt;img&gt;' will not include an ending slash.
+To change this behavior (i.e. for XHTML) just set 'ending_slash' to <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">img</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">ending_slash</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;http://somehost/images/image.png&quot;</span><span class="p">)</span>
+<span class="go">&#39;&lt;img src=&quot;http://somehost/images/image.png&quot; /&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">ending_slash</span> <span class="o">=</span> <span class="bp">False</span> <span class="c"># Reset for later doctests</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="protections-against-cross-site-scripting-xss">
+<h3>Protections Against Cross-Site Scripting (XSS)<a class="headerlink" href="#protections-against-cross-site-scripting-xss" title="Permalink to this headline">¶</a></h3>
+<p>By default all unsafe (XSS) content in HTML tags will be removed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">a</span><span class="p">,</span> <span class="n">img</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">(</span><span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;javascript:alert(&#39;pwned!&#39;)&quot;</span><span class="p">),</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://hacker/&quot;</span><span class="p">)</span>
+<span class="go">&#39;&lt;a href=&quot;http://hacker/&quot;&gt;(removed)&lt;/a&gt;&#39;</span>
+</pre></div>
+</div>
+<p>If you want to change this behavior set the tag's 'safe_mode' attribute like
+so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">a</span><span class="p">,</span> <span class="n">img</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">safe_mode</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">safe_mode</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">(</span><span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;javascript:alert(&#39;pwned!&#39;)&quot;</span><span class="p">),</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://hacker/&quot;</span><span class="p">)</span>
+<span class="go">&#39;&lt;a href=&quot;http://hacker/&quot;&gt;&lt;img src=&quot;javascript:alert(\&#39;pwned!\&#39;)&quot;&gt;&lt;/a&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">safe_mode</span> <span class="o">=</span> <span class="bp">True</span> <span class="c"># Reset for later doctests</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">safe_mode</span> <span class="o">=</span> <span class="bp">True</span> <span class="c"># Ditto</span>
+</pre></div>
+</div>
+<p>You may also change the replacement text if you like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">a</span><span class="p">,</span> <span class="n">img</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">replacement</span> <span class="o">=</span> <span class="s">&quot;No no no!&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">(</span><span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;javascript:alert(&#39;pwned!&#39;)&quot;</span><span class="p">),</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://hacker/&quot;</span><span class="p">)</span>
+<span class="go">&#39;&lt;a href=&quot;http://hacker/&quot;&gt;No no no!&lt;/a&gt;&#39;</span>
+</pre></div>
+</div>
+<p>If you set 'replacement' to 'entities' the rejected HTML will be converted to
+character entities like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">a</span><span class="p">,</span> <span class="n">img</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">replacement</span> <span class="o">=</span> <span class="s">&quot;entities&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">replacement</span> <span class="o">=</span> <span class="s">&quot;entities&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">(</span><span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;javascript:alert(&#39;pwned!&#39;)&quot;</span><span class="p">),</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://hacker/&quot;</span><span class="p">)</span>
+<span class="go">&#39;&lt;a href=&quot;http://hacker/&quot;&gt;&amp;lt;img src=&quot;javascript:alert(\&#39;pwned!\&#39;)&quot;&amp;gt;&lt;/a&gt;&#39;</span>
+</pre></div>
+</div>
+<p>It is also possible to create a whitelist of allowed tags.  All other tags
+contained therein will automatically be replaced:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">span</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">whitelist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;span&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;strong&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">span</span><span class="o">.</span><span class="n">whitelist</span> <span class="o">=</span> <span class="n">whitelist</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">span</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s">&#39;This is &lt;b&gt;bold&lt;/b&gt; new lib is &lt;script&gt;awesome();&lt;/script&gt;&#39;</span><span class="p">))</span>
+<span class="go">&#39;&lt;span&gt;This is &lt;b&gt;bold&lt;/b&gt; new lib is (removed)awesome();(removed)&lt;/span&gt;&#39;</span>
+</pre></div>
+</div>
+<p>Lastly, all strings returned by <a class="reference internal" href="#module-htmltag" title="htmltag"><tt class="xref py py-obj docutils literal"><span class="pre">htmltag</span></tt></a> are actually a subclass of <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">str</span></tt></a>:
+<a class="reference internal" href="#htmltag.HTML" title="htmltag.HTML"><tt class="xref py py-obj docutils literal"><span class="pre">HTML</span></tt></a>.  It has a useful <tt class="xref py py-obj docutils literal"><span class="pre">escaped</span></tt> property:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span><span class="o">.</span><span class="n">safe_mode</span> <span class="o">=</span> <span class="bp">False</span> <span class="c"># Turn off so we have a dangerous example ;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">html</span> <span class="o">=</span> <span class="n">address</span><span class="p">(</span><span class="s">&#39;1 Hacker Ln., Nowhere, USA&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+<span class="go">&lt;address&gt;1 Hacker Ln., Nowhere, USA&lt;/address&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">escaped</span><span class="p">)</span>
+<span class="go">&amp;lt;address&amp;gt;1 Hacker Ln., Nowhere, USA&amp;lt;/address&amp;gt;</span>
+</pre></div>
+</div>
+<p>This can be extremely useful if you want to be double-sure that no executable
+stuff ends up in your program's output.</p>
+</div>
+</div>
+<div class="section" id="functions-and-classes">
+<h2>Functions and Classes<a class="headerlink" href="#functions-and-classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="htmltag.TagWrap">
+<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">TagWrap</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lets you wrap whatever string you want in whatever tag you want.  Supports a
+number of options:</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">keyword safe_mode:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> dangerous (XSS) content will be removed         from all HTML.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">keyword whitelist:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If given (iterable) only tags that exist in the         whitelist will be allowed.  All else will be escaped into HTML entities.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">keyword replacement:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">A string to replace unsafe HTML with.  If set to         &quot;entities&quot;, will convert unsafe tags to HTML entities so they display         as-is but won't be evaluated by renderers/browsers'.  The defaults is         &quot;(removed)&quot;.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">keyword log_rejects:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> rejected unsafe (XSS) HTML will be         logged using <tt class="xref py py-meth docutils literal"><span class="pre">logging.error()</span></tt>.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">keyword ending_slash:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'         will not have a '/' placed before the '&gt;'.  Usually only necessary with        XHTML documents (as opposed to HTML4 or HTML5).  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>The <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> class may be used in a direct fashion (as opposed to the
+metaprogramming magic way: <tt class="docutils literal"><span class="pre">from</span> <span class="pre">htmltag</span> <span class="pre">import</span> <span class="pre">sometag</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">TagWrap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;img&#39;</span><span class="p">,</span> <span class="n">ending_slash</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;http://company.com/someimage.png&quot;</span><span class="p">))</span>
+<span class="go">&lt;img src=&quot;http://company.com/someimage.png&quot; /&gt;</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> class also has a <a class="reference internal" href="#htmltag.TagWrap.copy" title="htmltag.TagWrap.copy"><tt class="xref py py-meth docutils literal"><span class="pre">copy()</span></tt></a> method which can be
+useful when you want a new tag to have the same attributes as another:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">TagWrap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">whitelist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;i&quot;</span><span class="p">,</span> <span class="s">&quot;strong&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;em&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">replacement</span> <span class="o">=</span> <span class="s">&quot;(tag not allowed)&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">whitelist</span><span class="o">=</span><span class="n">whitelist</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="n">replacement</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">whitelist</span><span class="p">)</span>
+<span class="go">[&#39;b&#39;, &#39;i&#39;, &#39;strong&#39;, &#39;a&#39;, &#39;em&#39;]</span>
+</pre></div>
+</div>
+<p>Here's how you can create a number of tags with your own custom settings all
+at once:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">TagWrap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">whitelist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;i&quot;</span><span class="p">,</span> <span class="s">&quot;strong&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;em&quot;</span><span class="p">]</span> <span class="c"># Whitelist ourselves</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">replacement</span> <span class="o">=</span> <span class="s">&quot;(tag not allowed)&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">],</span> <span class="n">tag</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">TagWrap</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">whitelist</span><span class="o">=</span><span class="n">whitelist</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="n">replacement</span><span class="p">))</span>
+<span class="go">print(strong.replacement)</span>
+<span class="go">(tag not allowed)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">sys.modules[__name__]</span></tt> is the current module; &quot;the global <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt>&quot;.</p>
+</div>
+<dl class="attribute">
+<dt id="htmltag.TagWrap.__weakref__">
+<tt class="descname">__weakref__</tt><a class="headerlink" href="#htmltag.TagWrap.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="htmltag.TagWrap.copy">
+<tt class="descname">copy</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new instance of <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> using the given <em>tagname</em> that has
+all the same attributes as this instance.  If <em>kwargs</em> is given they
+will override the attributes of the created instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="htmltag.TagWrap.escape">
+<tt class="descname">escape</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap.escape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <em>string</em> with all instances of '&lt;', '&gt;', and '&amp;' converted into
+HTML entities.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="htmltag.TagWrap.wrap">
+<tt class="descname">wrap</tt><big>(</big><em>tag</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap.wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all <em>args</em> (strings) wrapped in HTML tags like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="s">&#39;bold text&#39;</span><span class="p">))</span>
+<span class="go">&lt;b&gt;bold text&lt;/b&gt;</span>
+</pre></div>
+</div>
+<p>To add attributes to the tag you can pass them as keyword arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="s">&#39;awesome software&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s">&#39;http://liftoffsoftware.com/&#39;</span><span class="p">))</span>
+<span class="go">&lt;a href=&quot;http://liftoffsoftware.com/&quot;&gt;awesome software&lt;/a&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference internal" href="#htmltag.TagWrap.wrap" title="htmltag.TagWrap.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> will automatically convert '&lt;', '&gt;',         and '&amp;' into HTML entities unless the wrapped string has an <tt class="xref py py-obj docutils literal"><span class="pre">__html__</span></tt>         method</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="strip-xss">
+<h2>strip_xss()<a class="headerlink" href="#strip-xss" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="htmltag.strip_xss">
+<tt class="descclassname">htmltag.</tt><tt class="descname">strip_xss</tt><big>(</big><em>html</em>, <em>whitelist=None</em>, <em>replacement='(removed)'</em><big>)</big><a class="headerlink" href="#htmltag.strip_xss" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns a tuple containing:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>html</em> with all non-whitelisted HTML tags replaced with <em>replacement</em>.</li>
+<li>A <tt class="xref py py-obj docutils literal"><span class="pre">set()</span></tt> containing the tags that were removed.</li>
+</ul>
+</div></blockquote>
+<p>Any tags that contain JavaScript, VBScript, or other known XSS/executable
+functions will also be removed.</p>
+<p>If <em>whitelist</em> is not given the following will be used:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">whitelist</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span>
+    <span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;abbr&#39;</span><span class="p">,</span> <span class="s">&#39;aside&#39;</span><span class="p">,</span> <span class="s">&#39;audio&#39;</span><span class="p">,</span> <span class="s">&#39;bdi&#39;</span><span class="p">,</span> <span class="s">&#39;bdo&#39;</span><span class="p">,</span> <span class="s">&#39;blockquote&#39;</span><span class="p">,</span> <span class="s">&#39;canvas&#39;</span><span class="p">,</span>
+    <span class="s">&#39;caption&#39;</span><span class="p">,</span> <span class="s">&#39;code&#39;</span><span class="p">,</span> <span class="s">&#39;col&#39;</span><span class="p">,</span> <span class="s">&#39;colgroup&#39;</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="s">&#39;dd&#39;</span><span class="p">,</span> <span class="s">&#39;del&#39;</span><span class="p">,</span>
+    <span class="s">&#39;details&#39;</span><span class="p">,</span> <span class="s">&#39;div&#39;</span><span class="p">,</span> <span class="s">&#39;dl&#39;</span><span class="p">,</span> <span class="s">&#39;dt&#39;</span><span class="p">,</span> <span class="s">&#39;em&#39;</span><span class="p">,</span> <span class="s">&#39;figcaption&#39;</span><span class="p">,</span> <span class="s">&#39;figure&#39;</span><span class="p">,</span> <span class="s">&#39;h1&#39;</span><span class="p">,</span>
+    <span class="s">&#39;h2&#39;</span><span class="p">,</span> <span class="s">&#39;h3&#39;</span><span class="p">,</span> <span class="s">&#39;h4&#39;</span><span class="p">,</span> <span class="s">&#39;h5&#39;</span><span class="p">,</span> <span class="s">&#39;h6&#39;</span><span class="p">,</span> <span class="s">&#39;hr&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="s">&#39;img&#39;</span><span class="p">,</span> <span class="s">&#39;ins&#39;</span><span class="p">,</span> <span class="s">&#39;kbd&#39;</span><span class="p">,</span> <span class="s">&#39;li&#39;</span><span class="p">,</span>
+    <span class="s">&#39;mark&#39;</span><span class="p">,</span> <span class="s">&#39;ol&#39;</span><span class="p">,</span> <span class="s">&#39;p&#39;</span><span class="p">,</span> <span class="s">&#39;pre&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;rp&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">,</span> <span class="s">&#39;ruby&#39;</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="s">&#39;samp&#39;</span><span class="p">,</span>
+    <span class="s">&#39;small&#39;</span><span class="p">,</span> <span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;span&#39;</span><span class="p">,</span> <span class="s">&#39;strong&#39;</span><span class="p">,</span> <span class="s">&#39;sub&#39;</span><span class="p">,</span> <span class="s">&#39;summary&#39;</span><span class="p">,</span> <span class="s">&#39;sup&#39;</span><span class="p">,</span>
+    <span class="s">&#39;table&#39;</span><span class="p">,</span> <span class="s">&#39;td&#39;</span><span class="p">,</span> <span class="s">&#39;th&#39;</span><span class="p">,</span> <span class="s">&#39;time&#39;</span><span class="p">,</span> <span class="s">&#39;tr&#39;</span><span class="p">,</span> <span class="s">&#39;track&#39;</span><span class="p">,</span> <span class="s">&#39;u&#39;</span><span class="p">,</span> <span class="s">&#39;ul&#39;</span><span class="p">,</span> <span class="s">&#39;var&#39;</span><span class="p">,</span>
+    <span class="s">&#39;video&#39;</span><span class="p">,</span> <span class="s">&#39;wbr&#39;</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To disable the whitelisting simply set <tt class="xref py py-obj docutils literal"><span class="pre">whitelist=&quot;off&quot;</span></tt>.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">html</span> <span class="o">=</span> <span class="s">&#39;&lt;span&gt;Hello, exploit: &lt;img src=&quot;javascript:alert(&quot;pwned!&quot;)&quot;&gt;&lt;/span&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">html</span><span class="p">,</span> <span class="n">rejects</span> <span class="o">=</span> <span class="n">strip_xss</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;</span><span class="si">%s</span><span class="s">&#39;, Rejected: &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rejects</span><span class="p">)))</span>
+<span class="go">&#39;&lt;span&gt;Hello, exploit: (removed)&lt;/span&gt;&#39;, Rejected: &#39;&lt;img src=&quot;javascript:alert(&quot;pwned!&quot;)&quot;&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The default <em>replacement</em> is &quot;(removed)&quot;.</p>
+</div>
+<p>If <em>replacement</em> is &quot;entities&quot; bad HTML tags will be encoded into HTML
+entities.  This allows things like &lt;script&gt;'whatever'&lt;/script&gt; to be
+displayed without execution (which would be much less annoying to users that
+were merely trying to share a code example).  Here's an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">html</span> <span class="o">=</span> <span class="s">&#39;&lt;span&gt;Hello, exploit: &lt;img src=&quot;javascript:alert(&quot;pwned!&quot;)&quot;&gt;&lt;/span&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">html</span><span class="p">,</span> <span class="n">rejects</span> <span class="o">=</span> <span class="n">strip_xss</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="s">&quot;entities&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+<span class="go">&lt;span&gt;Hello, exploit: &amp;lt;img src=&quot;javascript:alert(&quot;pwned!&quot;)&quot;&amp;gt;&lt;/span&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="s">&quot;Rejected: &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rejects</span><span class="p">))</span>
+<span class="go">Rejected: &#39;&lt;img src=&quot;javascript:alert(&quot;pwned!&quot;)&quot;&gt;&#39;</span>
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> This function should work to protect against <em>all</em> <a class="reference external" href="https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet">the XSS
+examples at OWASP</a>.  Please
+<a class="reference external" href="https://github.com/LiftoffSoftware/htmltag/issues">let us know</a> if you
+find something we missed.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="html">
+<h2>HTML()<a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="htmltag.HTML">
+<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">HTML</tt><a class="headerlink" href="#htmltag.HTML" title="Permalink to this definition">¶</a></dt>
+<dd><p class="versionadded">
+<span class="versionmodified">New in version 1.2.0.</span></p>
+<p>A subclass of Python's built-in <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">str</span></tt></a> to add a simple <a class="reference internal" href="#htmltag.HTML.__html__" title="htmltag.HTML.__html__"><tt class="xref py py-obj docutils literal"><span class="pre">__html__</span></tt></a> method
+that lets us know this string is HTML and does not need to be escaped.  It
+also has an <a class="reference internal" href="#htmltag.HTML.escaped" title="htmltag.HTML.escaped"><tt class="xref py py-obj docutils literal"><span class="pre">escaped</span></tt></a> property that will return <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> with all special
+characters converted into HTML entities.</p>
+<dl class="method">
+<dt id="htmltag.HTML.__html__">
+<tt class="descname">__html__</tt><big>(</big><big>)</big><a class="headerlink" href="#htmltag.HTML.__html__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> (we're already a string) in unmodified form.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="htmltag.HTML.escaped">
+<tt class="descname">escaped</tt><a class="headerlink" href="#htmltag.HTML.escaped" title="Permalink to this definition">¶</a></dt>
+<dd><p>A property that returns <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> with all characters that have special
+meaning (in HTML/XML) replaced with HTML entities.  Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s">&#39;&lt;span&gt;These span tags will be escaped&lt;/span&gt;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">escaped</span><span class="p">)</span>
+<span class="go">&amp;lt;span&amp;gt;These span tags will be escaped&amp;lt;/span&amp;gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tagwrap">
+<h2>TagWrap()<a class="headerlink" href="#tagwrap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt>
+<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">TagWrap</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big></dt>
+<dd><p>Lets you wrap whatever string you want in whatever tag you want.  Supports a
+number of options:</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">keyword safe_mode:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> dangerous (XSS) content will be removed         from all HTML.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">keyword whitelist:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If given (iterable) only tags that exist in the         whitelist will be allowed.  All else will be escaped into HTML entities.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">keyword replacement:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">A string to replace unsafe HTML with.  If set to         &quot;entities&quot;, will convert unsafe tags to HTML entities so they display         as-is but won't be evaluated by renderers/browsers'.  The defaults is         &quot;(removed)&quot;.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">keyword log_rejects:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> rejected unsafe (XSS) HTML will be         logged using <tt class="xref py py-meth docutils literal"><span class="pre">logging.error()</span></tt>.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a></td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">keyword ending_slash:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'         will not have a '/' placed before the '&gt;'.  Usually only necessary with        XHTML documents (as opposed to HTML4 or HTML5).  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>The <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> class may be used in a direct fashion (as opposed to the
+metaprogramming magic way: <tt class="docutils literal"><span class="pre">from</span> <span class="pre">htmltag</span> <span class="pre">import</span> <span class="pre">sometag</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">TagWrap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;img&#39;</span><span class="p">,</span> <span class="n">ending_slash</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;http://company.com/someimage.png&quot;</span><span class="p">))</span>
+<span class="go">&lt;img src=&quot;http://company.com/someimage.png&quot; /&gt;</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> class also has a <a class="reference internal" href="#htmltag.TagWrap.copy" title="htmltag.TagWrap.copy"><tt class="xref py py-meth docutils literal"><span class="pre">copy()</span></tt></a> method which can be
+useful when you want a new tag to have the same attributes as another:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">TagWrap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">whitelist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;i&quot;</span><span class="p">,</span> <span class="s">&quot;strong&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;em&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">replacement</span> <span class="o">=</span> <span class="s">&quot;(tag not allowed)&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">whitelist</span><span class="o">=</span><span class="n">whitelist</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="n">replacement</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">whitelist</span><span class="p">)</span>
+<span class="go">[&#39;b&#39;, &#39;i&#39;, &#39;strong&#39;, &#39;a&#39;, &#39;em&#39;]</span>
+</pre></div>
+</div>
+<p>Here's how you can create a number of tags with your own custom settings all
+at once:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">TagWrap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">whitelist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;i&quot;</span><span class="p">,</span> <span class="s">&quot;strong&quot;</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;em&quot;</span><span class="p">]</span> <span class="c"># Whitelist ourselves</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">replacement</span> <span class="o">=</span> <span class="s">&quot;(tag not allowed)&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">],</span> <span class="n">tag</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">TagWrap</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">whitelist</span><span class="o">=</span><span class="n">whitelist</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="n">replacement</span><span class="p">))</span>
+<span class="go">print(strong.replacement)</span>
+<span class="go">(tag not allowed)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">sys.modules[__name__]</span></tt> is the current module; &quot;the global <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt>&quot;.</p>
+</div>
+<dl class="method">
+<dt>
+<tt class="descname">copy</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big></dt>
+<dd><p>Returns a new instance of <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> using the given <em>tagname</em> that has
+all the same attributes as this instance.  If <em>kwargs</em> is given they
+will override the attributes of the created instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">escape</tt><big>(</big><em>string</em><big>)</big></dt>
+<dd><p>Returns <em>string</em> with all instances of '&lt;', '&gt;', and '&amp;' converted into
+HTML entities.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">wrap</tt><big>(</big><em>tag</em>, <em>*args</em>, <em>**kwargs</em><big>)</big></dt>
+<dd><p>Returns all <em>args</em> (strings) wrapped in HTML tags like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="s">&#39;bold text&#39;</span><span class="p">))</span>
+<span class="go">&lt;b&gt;bold text&lt;/b&gt;</span>
+</pre></div>
+</div>
+<p>To add attributes to the tag you can pass them as keyword arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">(</span><span class="s">&#39;awesome software&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s">&#39;http://liftoffsoftware.com/&#39;</span><span class="p">))</span>
+<span class="go">&lt;a href=&quot;http://liftoffsoftware.com/&quot;&gt;awesome software&lt;/a&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference internal" href="#htmltag.TagWrap.wrap" title="htmltag.TagWrap.wrap"><tt class="xref py py-meth docutils literal"><span class="pre">wrap()</span></tt></a> will automatically convert '&lt;', '&gt;',         and '&amp;' into HTML entities unless the wrapped string has an <tt class="xref py py-obj docutils literal"><span class="pre">__html__</span></tt>         method</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="selfwrap">
+<h2>SelfWrap()<a class="headerlink" href="#selfwrap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="htmltag.SelfWrap">
+<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">SelfWrap</tt><big>(</big><em>tagname</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.SelfWrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is the magic that lets us do things like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">span</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2011, Liftoff Software Corporation.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
