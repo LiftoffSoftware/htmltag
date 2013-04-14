@@ -3,8 +3,6 @@ htmltag.py - Safely and intuitively construct HTML tags
 
 .. moduleauthor:: Dan McDougall <daniel.mcdougall@liftoffsoftware.com>
 
-.. note:: The latest version of this documentation can be found here: http://liftoff.github.io/htmltag/
-
 .. automodule:: htmltag
     :members: TagWrap
     :private-members:
