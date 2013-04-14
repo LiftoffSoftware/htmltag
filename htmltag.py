@@ -344,7 +344,7 @@ class TagWrap(object):
         print(strong.replacement)
         (tag not allowed)
 
-    .. note:: ``sys.modules[__name__]`` is the current module; "the global `self`".
+    .. note:: ``sys.modules[__name__]`` is the current module; the global 'self'.
     """
     def __init__(self, tagname, **kwargs):
         self.tagname = tagname
