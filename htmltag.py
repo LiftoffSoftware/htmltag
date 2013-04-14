@@ -52,6 +52,12 @@ like so::
     >>> print(li("CEO", **{"class": "user", "data-name": "Dan McDougall"}))
     <li class="user" data-name="Dan McDougall">CEO</li>
 
+If you want to use upper-case tags just import them in caps:
+
+    >>> from htmltag import STRONG
+    >>> print(STRONG('whatever'))
+    <STRONG>whatever</STRONG>
+
 Combining Tags and Content
 --------------------------
 You can combine multiple tags to create a larger HTML string like so::
@@ -313,7 +319,8 @@ class TagWrap(object):
         logged using :meth:`logging.error`.  Defaults to `False`
         :keyword ending_slash: If `True` self-closing HTML tags like '<img>' \
         will not have a '/' placed before the '>'.  Usually only necessary with\
-        XHTML documents (as opposed to HTML4 or HTML5).  Defaults to `False`.
+        XML and XHTML documents (as opposed to regular HTML).  Defaults to \
+        `False`.
 
     The `TagWrap` class may be used in a direct fashion (as opposed to the
     metaprogramming magic way: ``from htmltag import sometag``)::

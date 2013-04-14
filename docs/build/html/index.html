@@ -149,6 +149,12 @@ like so:</p>
 <span class="go">&lt;li class=&quot;user&quot; data-name=&quot;Dan McDougall&quot;&gt;CEO&lt;/li&gt;</span>
 </pre></div>
 </div>
+<p>If you want to use upper-case tags just import them in caps:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">STRONG</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">STRONG</span><span class="p">(</span><span class="s">&#39;whatever&#39;</span><span class="p">))</span>
+<span class="go">&lt;STRONG&gt;whatever&lt;/STRONG&gt;</span>
+</pre></div>
+</div>
 <div class="section" id="combining-tags-and-content">
 <h3>Combining Tags and Content<a class="headerlink" href="#combining-tags-and-content" title="Permalink to this headline">¶</a></h3>
 <p>You can combine multiple tags to create a larger HTML string like so:</p>
@@ -270,7 +276,7 @@ number of options:</p>
 <tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> rejected unsafe (XSS) HTML will be         logged using <tt class="xref py py-meth docutils literal"><span class="pre">logging.error()</span></tt>.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a></td>
 </tr>
 <tr class="field-odd field"><th class="field-name" colspan="2">keyword ending_slash:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'         will not have a '/' placed before the '&gt;'.  Usually only necessary with        XHTML documents (as opposed to HTML4 or HTML5).  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</td>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'         will not have a '/' placed before the '&gt;'.  Usually only necessary with        XML and XHTML documents (as opposed to regular HTML).  Defaults to         <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</td>
 </tr>
 </tbody>
 </table>
@@ -303,8 +309,8 @@ at once:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">],</span> <span class="n">tag</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="n">TagWrap</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">whitelist</span><span class="o">=</span><span class="n">whitelist</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="n">replacement</span><span class="p">))</span>
-<span class="go">print(strong.replacement)</span>
-<span class="go">(tag not allowed)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strong</span><span class="o">.</span><span class="n">replacement</span> 
+<span class="go">&#39;(tag not allowed)&#39;    </span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -473,7 +479,7 @@ number of options:</p>
 <tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> rejected unsafe (XSS) HTML will be         logged using <tt class="xref py py-meth docutils literal"><span class="pre">logging.error()</span></tt>.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a></td>
 </tr>
 <tr class="field-odd field"><th class="field-name" colspan="2">keyword ending_slash:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'         will not have a '/' placed before the '&gt;'.  Usually only necessary with        XHTML documents (as opposed to HTML4 or HTML5).  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</td>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'         will not have a '/' placed before the '&gt;'.  Usually only necessary with        XML and XHTML documents (as opposed to regular HTML).  Defaults to         <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</td>
 </tr>
 </tbody>
 </table>
@@ -506,8 +512,8 @@ at once:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">__name__</span><span class="p">],</span> <span class="n">tag</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="n">TagWrap</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">whitelist</span><span class="o">=</span><span class="n">whitelist</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="n">replacement</span><span class="p">))</span>
-<span class="go">print(strong.replacement)</span>
-<span class="go">(tag not allowed)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">strong</span><span class="o">.</span><span class="n">replacement</span> 
+<span class="go">&#39;(tag not allowed)&#39;    </span>
 </pre></div>
 </div>
 <div class="admonition note">

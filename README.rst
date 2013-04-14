@@ -38,6 +38,12 @@ like so::
     >>> print(li("CEO", **{"class": "user", "data-name": "Dan McDougall"}))
     <li class="user" data-name="Dan McDougall">CEO</li>
 
+If you want to use upper-case tags just import them in caps:
+
+    >>> from htmltag import STRONG
+    >>> print(STRONG('whatever'))
+    <STRONG>whatever</STRONG>
+
 Combining Tags and Content
 --------------------------
 You can combine multiple tags to create a larger HTML string like so::
