@@ -344,11 +344,12 @@ class TagWrap(object):
         >>> for tag in whitelist:
         ...     setattr(sys.modules[__name__], tag,
         ...         TagWrap(tag, whitelist=whitelist, replacement=replacement))
-        print(strong.replacement)
-        (tag not allowed)
+        >>> strong.replacement # doctest: +SKIP
+        '(tag not allowed)'    # doctest: +SKIP
 
     .. note:: ``sys.modules[__name__]`` is the current module; the global 'self'.
     """
+    # NOTE: The above doctest is skipped because it only works in reality :)
     def __init__(self, tagname, **kwargs):
         self.tagname = tagname
         self.kwargs = kwargs # For copying later
