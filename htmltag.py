@@ -5,8 +5,8 @@
 # For license information see LICENSE.txt
 
 # Meta
-__version__ = '1.4'
-__version_info__ = (1, 4)
+__version__ = '1.5'
+__version_info__ = (1, 5)
 __license__ = "Apache 2.0"
 __author__ = 'Dan McDougall <daniel.mcdougall@liftoffsoftware.com>'
 
@@ -284,6 +284,7 @@ class HTML(str):
     also has an `escaped` property that will return `self` with all special
     characters converted into HTML entities.
     """
+    tagname = None
     def __html__(self):
         """
         Returns `self` (we're already a string) in unmodified form.
@@ -302,25 +303,73 @@ class HTML(str):
         return cgi.escape(self).encode(
             'ascii', 'xmlcharrefreplace').decode('ascii')
 
+    def append(self, *strings):
+        """
+        Adds any number of supplied *strings* to `self` (we're a subclass of
+        `str` remember) just before the last closing tag and returns a new
+        instance of `~htmltag.HTML` with the result.
+        Example::
+
+            >>> from htmltag import span, b
+            >>> html = span('Test:')
+            >>> print(html)
+            <span>Test:</span>
+            >>> html = html.append(' ', b('appended'))
+            >>> print(html)
+            <span>Test: <b>appended</b></span>
+
+        In the case of self-closing tags like '<img>' the string will simply be
+        appended after the tag::
+
+            >>> from htmltag import img
+            >>> image = img(src="http://company.com/image.png")
+            >>> print(image.append("Appended string"))
+            <img src="http://company.com/image.png">Appended string
+
+        .. note:: Why not update ourselves in-place?  Because we're a subclass
+            of `str`; in Python strings are immutable.
+        """
+        close_tag_start = self.rfind('</')
+        if self.tagname: # More accurate
+            close_tag_start = self.rfind('</'+self.tagname)
+        if close_tag_start == -1: # Couldn't find closing tag
+            return self + "".join(strings) # Just tack on to the end
+        ending = self[close_tag_start:]
+        beginning = self[:close_tag_start]
+        if self.tagname: # Preserve it
+            tagname = self.tagname
+            new = HTML(beginning + "".join(strings) + ending)
+            new.tagname = tagname
+            return new
+        else:
+            return HTML(beginning + "".join(strings) + ending)
+
 class TagWrap(object):
     """
-    Lets you wrap whatever string you want in whatever tag you want.  Supports a
-    number of options:
+    Lets you wrap whatever string you want in whatever HTML tag (*tagname*) you
+    want.
 
-        :keyword safe_mode: If `True` dangerous (XSS) content will be removed \
+    **Optional Keyword Arguments:**
+
+    :keyword safe_mode: If `True` dangerous (XSS) content will be removed
         from all HTML.  Defaults to `True`
-        :keyword whitelist: If given (iterable) only tags that exist in the \
-        whitelist will be allowed.  All else will be escaped into HTML entities.
-        :keyword replacement: A string to replace unsafe HTML with.  If set to \
-        "entities", will convert unsafe tags to HTML entities so they display \
-        as-is but won't be evaluated by renderers/browsers'.  The defaults is \
-        "(removed)".
-        :keyword log_rejects: If `True` rejected unsafe (XSS) HTML will be \
+    :keyword whitelist: If given only tags that exist in the whitelist will be
+        allowed.  All else will be escaped into HTML entities.
+    :keyword replacement: A string to replace unsafe HTML with.  If set to
+        "entities", will convert unsafe tags to HTML entities so they
+        display as-is but won't be evaluated by renderers/browsers'.  The
+        defaults is "(removed)".
+    :keyword log_rejects: If `True` rejected unsafe (XSS) HTML will be
         logged using :meth:`logging.error`.  Defaults to `False`
-        :keyword ending_slash: If `True` self-closing HTML tags like '<img>' \
-        will not have a '/' placed before the '>'.  Usually only necessary with\
-        XML and XHTML documents (as opposed to regular HTML).  Defaults to \
-        `False`.
+    :keyword ending_slash: If `True` self-closing HTML tags like '<img>'
+        will not have a '/' placed before the '>'.  Usually only necessary
+        with XML and XHTML documents (as opposed to regular HTML).  Defaults
+        to `False`.
+    :type safe_mode: boolean
+    :type whitelist: iterable
+    :type replacement: string, "entities", or "off"
+    :type log_rejects: boolean
+    :type ending_slash: boolean
 
     The `TagWrap` class may be used in a direct fashion (as opposed to the
     metaprogramming magic way: ``from htmltag import sometag``)::
@@ -418,7 +467,9 @@ class TagWrap(object):
                 logging.error(
                     "{name} rejected unsafe HTML: '{rejected}'".format(
                     name=self.__class__.__name__, rejected=rejected))
-        return HTML(html)
+        html = HTML(html)
+        html.tagname = tag # So we can easily append()
+        return html
 
     def copy(self, tagname, **kwargs):
         """

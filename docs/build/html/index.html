@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>htmltag.py - Safely and intuitively construct HTML tags &mdash; htmltag 1.4 documentation</title>
+    <title>htmltag.py - Safely and intuitively construct HTML tags &mdash; htmltag 1.5 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -18,7 +18,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.4',
+        VERSION:     '1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -31,7 +31,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-2.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="htmltag 1.4 documentation" href="#" />
+    <link rel="top" title="htmltag 1.5 documentation" href="#" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -51,7 +51,7 @@
       </button>
 
       <a class="brand" href="#">htmltag</a>
-      <span class="navbar-text pull-left"><b>1.4</b></span>
+      <span class="navbar-text pull-left"><b>1.5</b></span>
 
       <div class="nav-collapse">
         <ul class="nav">
@@ -256,31 +256,33 @@ stuff ends up in your program's output.</p>
 <dl class="class">
 <dt id="htmltag.TagWrap">
 <em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">TagWrap</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Lets you wrap whatever string you want in whatever tag you want.  Supports a
-number of options:</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Lets you wrap whatever string you want in whatever HTML tag (<em>tagname</em>) you
+want.</p>
+<p><strong>Optional Keyword Arguments:</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">keyword safe_mode:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> dangerous (XSS) content will be removed         from all HTML.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a></td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">keyword whitelist:</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If given (iterable) only tags that exist in the         whitelist will be allowed.  All else will be escaped into HTML entities.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">keyword replacement:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">A string to replace unsafe HTML with.  If set to         &quot;entities&quot;, will convert unsafe tags to HTML entities so they display         as-is but won't be evaluated by renderers/browsers'.  The defaults is         &quot;(removed)&quot;.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">keyword log_rejects:</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> rejected unsafe (XSS) HTML will be         logged using <tt class="xref py py-meth docutils literal"><span class="pre">logging.error()</span></tt>.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a></td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">keyword ending_slash:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'         will not have a '/' placed before the '&gt;'.  Usually only necessary with        XML and XHTML documents (as opposed to regular HTML).  Defaults to         <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>safe_mode</strong> (<em>boolean</em>) -- If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> dangerous (XSS) content will be removed
+from all HTML.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a></li>
+<li><strong>whitelist</strong> (<em>iterable</em>) -- If given only tags that exist in the whitelist will be
+allowed.  All else will be escaped into HTML entities.</li>
+<li><strong>replacement</strong> (<em>string, &quot;entities&quot;, or &quot;off&quot;</em>) -- A string to replace unsafe HTML with.  If set to
+&quot;entities&quot;, will convert unsafe tags to HTML entities so they
+display as-is but won't be evaluated by renderers/browsers'.  The
+defaults is &quot;(removed)&quot;.</li>
+<li><strong>log_rejects</strong> (<em>boolean</em>) -- If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> rejected unsafe (XSS) HTML will be
+logged using <tt class="xref py py-meth docutils literal"><span class="pre">logging.error()</span></tt>.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a></li>
+<li><strong>ending_slash</strong> (<em>boolean</em>) -- If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'
+will not have a '/' placed before the '&gt;'.  Usually only necessary
+with XML and XHTML documents (as opposed to regular HTML).  Defaults
+to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 <p>The <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> class may be used in a direct fashion (as opposed to the
 metaprogramming magic way: <tt class="docutils literal"><span class="pre">from</span> <span class="pre">htmltag</span> <span class="pre">import</span> <span class="pre">sometag</span></tt>):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">TagWrap</span>
@@ -440,6 +442,37 @@ characters converted into HTML entities.</p>
 <dd><p>Returns <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> (we're already a string) in unmodified form.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="htmltag.HTML.append">
+<tt class="descname">append</tt><big>(</big><em>*strings</em><big>)</big><a class="headerlink" href="#htmltag.HTML.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds any number of supplied <em>strings</em> to <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> (we're a subclass of
+<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">str</span></tt></a> remember) just before the last closing tag and returns a new
+instance of <a class="reference internal" href="#htmltag.HTML" title="htmltag.HTML"><tt class="xref py py-obj docutils literal"><span class="pre">HTML</span></tt></a> with the result.
+Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">span</span><span class="p">,</span> <span class="n">b</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">html</span> <span class="o">=</span> <span class="n">span</span><span class="p">(</span><span class="s">&#39;Test:&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+<span class="go">&lt;span&gt;Test:&lt;/span&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">html</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">(</span><span class="s">&#39;appended&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+<span class="go">&lt;span&gt;Test: &lt;b&gt;appended&lt;/b&gt;&lt;/span&gt;</span>
+</pre></div>
+</div>
+<p>In the case of self-closing tags like '&lt;img&gt;' the string will simply be
+appended after the tag:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">img</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">img</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s">&quot;http://company.com/image.png&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Appended string&quot;</span><span class="p">))</span>
+<span class="go">&lt;img src=&quot;http://company.com/image.png&quot;&gt;Appended string</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Why not update ourselves in-place?  Because we're a subclass
+of <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">str</span></tt></a>; in Python strings are immutable.</p>
+</div>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="htmltag.HTML.escaped">
 <tt class="descname">escaped</tt><a class="headerlink" href="#htmltag.HTML.escaped" title="Permalink to this definition">¶</a></dt>
@@ -459,31 +492,33 @@ meaning (in HTML/XML) replaced with HTML entities.  Example:</p>
 <dl class="class">
 <dt>
 <em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">TagWrap</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big></dt>
-<dd><p>Lets you wrap whatever string you want in whatever tag you want.  Supports a
-number of options:</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Lets you wrap whatever string you want in whatever HTML tag (<em>tagname</em>) you
+want.</p>
+<p><strong>Optional Keyword Arguments:</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">keyword safe_mode:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> dangerous (XSS) content will be removed         from all HTML.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a></td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">keyword whitelist:</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If given (iterable) only tags that exist in the         whitelist will be allowed.  All else will be escaped into HTML entities.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">keyword replacement:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">A string to replace unsafe HTML with.  If set to         &quot;entities&quot;, will convert unsafe tags to HTML entities so they display         as-is but won't be evaluated by renderers/browsers'.  The defaults is         &quot;(removed)&quot;.</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">keyword log_rejects:</th></tr>
-<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> rejected unsafe (XSS) HTML will be         logged using <tt class="xref py py-meth docutils literal"><span class="pre">logging.error()</span></tt>.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a></td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">keyword ending_slash:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'         will not have a '/' placed before the '&gt;'.  Usually only necessary with        XML and XHTML documents (as opposed to regular HTML).  Defaults to         <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>safe_mode</strong> (<em>boolean</em>) -- If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> dangerous (XSS) content will be removed
+from all HTML.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a></li>
+<li><strong>whitelist</strong> (<em>iterable</em>) -- If given only tags that exist in the whitelist will be
+allowed.  All else will be escaped into HTML entities.</li>
+<li><strong>replacement</strong> (<em>string, &quot;entities&quot;, or &quot;off&quot;</em>) -- A string to replace unsafe HTML with.  If set to
+&quot;entities&quot;, will convert unsafe tags to HTML entities so they
+display as-is but won't be evaluated by renderers/browsers'.  The
+defaults is &quot;(removed)&quot;.</li>
+<li><strong>log_rejects</strong> (<em>boolean</em>) -- If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> rejected unsafe (XSS) HTML will be
+logged using <tt class="xref py py-meth docutils literal"><span class="pre">logging.error()</span></tt>.  Defaults to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a></li>
+<li><strong>ending_slash</strong> (<em>boolean</em>) -- If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a> self-closing HTML tags like '&lt;img&gt;'
+will not have a '/' placed before the '&gt;'.  Usually only necessary
+with XML and XHTML documents (as opposed to regular HTML).  Defaults
+to <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 <p>The <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> class may be used in a direct fashion (as opposed to the
 metaprogramming magic way: <tt class="docutils literal"><span class="pre">from</span> <span class="pre">htmltag</span> <span class="pre">import</span> <span class="pre">sometag</span></tt>):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">TagWrap</span>
