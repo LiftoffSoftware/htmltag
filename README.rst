@@ -72,6 +72,17 @@ just wrap your string in :class:`htmltag.HTML` like so::
     >>> a(txt, href="http://liftoffsoftware.com/")
     '<a href="http://liftoffsoftware.com/"><strong>I am already HTML. Don\'t escape me!</strong></a>'
 
+Since Python doesn't allow modules to have dashes (-) in their names, if you
+need to create a tag like that just use an underscore and change its 'tagname'
+attribute::
+
+    >>> from htmltag import foo_bar
+    >>> print(foo_bar('baz')) # Before
+    '<foo_bar>baz</foo_bar>'
+    >>> foo_bar.tagname = 'foo-bar'
+    >>> print(foo_bar('baz')) # Before
+    '<foo-bar>baz</foo-bar>'
+
 By default self-closing HTML tags like '<img>' will not include an ending slash.
 To change this behavior (i.e. for XHTML) just set 'ending_slash' to `True`::
 
