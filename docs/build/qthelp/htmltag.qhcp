@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QHelpCollectionProject version="1.0">
+    <assistant>
+        <title>htmltag 1.5 documentation</title>
+        <homePage>qthelp://org.sphinx.htmltag.1.5/doc/index.html</homePage>
+        <startPage>qthelp://org.sphinx.htmltag.1.5/doc/index.html</startPage>
+    </assistant>
+    <docFiles>
+        <generate>
+            <file>
+                <input>htmltag.qhp</input>
+                <output>htmltag.qch</output>
+            </file>
+        </generate>
+        <register>
+            <file>htmltag.qch</file>
+        </register>
+    </docFiles>
+</QHelpCollectionProject>

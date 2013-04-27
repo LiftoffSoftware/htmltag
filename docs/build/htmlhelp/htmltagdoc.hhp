@@ -1,0 +1,43 @@
+[OPTIONS]
+Binary TOC=No
+Binary Index=No
+Compiled file=htmltagdoc.chm
+Contents file=htmltagdoc.hhc
+Default Window=htmltagdoc
+Default topic=index.html
+Display compile progress=No
+Full text search stop list file=htmltagdoc.stp
+Full-text search=Yes
+Index file=htmltagdoc.hhk
+Language=0x409
+Title=htmltag 1.5 documentation
+
+[WINDOWS]
+htmltagdoc="htmltag 1.5 documentation","htmltagdoc.hhc","htmltagdoc.hhk","index.html","index.html",,,,,0x63520,220,0x10384e,[0,0,1024,768],,,,,,,0
+
+[FILES]
+py-modindex.html
+genindex.html
+index.html
+_static\comment-close.png
+_static\pygments.css
+_static\ajax-loader.gif
+_static\comment.png
+_static\down.png
+_static\minus.png
+_static\basic.css
+_static\file.png
+_static\up-pressed.png
+_static\bootstrap-sphinx.css
+_static\up.png
+_static\down-pressed.png
+_static\comment-bright.png
+_static\plus.png
+_static\bootstrap-2.3.1\img\glyphicons-halflings-white.png
+_static\bootstrap-2.3.1\img\glyphicons-halflings.png
+_static\bootstrap-2.3.1\css\bootstrap.css
+_static\bootstrap-2.3.1\css\bootstrap-responsive.min.css
+_static\bootstrap-2.3.1\css\bootstrap.min.css
+_static\bootstrap-2.3.1\css\bootstrap-responsive.css
+_modules\htmltag.html
+_modules\index.html

@@ -1,5 +1,3 @@
-import os
-import sys
 import htmltag
 
 try:
@@ -7,12 +5,15 @@ try:
 except ImportError:
     from setuptools import setup
 
+from sphinx.setup_command import BuildDoc
+cmdclass = {'build_sphinx': BuildDoc}
 
 setup(
     name="htmltag",
     version=htmltag.__version__,
     description="Python HTML tag interface",
     author=htmltag.__author__,
+    cmdclass=cmdclass,
     author_email="daniel.mcdougall@liftoffsoftware.com",
     url="https://github.com/liftoff/htmltag",
     license="Apache 2.0",

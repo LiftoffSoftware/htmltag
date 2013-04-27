@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QtHelpProject version="1.0">
+    <namespace>org.sphinx.htmltag.1.5</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <customFilter name="htmltag 1.5">
+        <filterAttribute>htmltag</filterAttribute>
+        <filterAttribute>1.5</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>htmltag</filterAttribute>
+        <filterAttribute>1.5</filterAttribute>
+        <toc>
+            <section title="htmltag 1.5 documentation" ref="index.html">
+                <section title="Python Module Index" ref="py-modindex.html"/>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="__html__() (htmltag.HTML method)" id="htmltag.HTML.__html__" ref="index.html#htmltag.HTML.__html__"/>
+            <keyword name="__weakref__ (htmltag.TagWrap attribute)" id="htmltag.TagWrap.__weakref__" ref="index.html#htmltag.TagWrap.__weakref__"/>
+            <keyword name="append() (htmltag.HTML method)" id="htmltag.HTML.append" ref="index.html#htmltag.HTML.append"/>
+            <keyword name="copy() (htmltag.TagWrap method)" id="htmltag.TagWrap.copy" ref="index.html#htmltag.TagWrap.copy"/>
+            <keyword name="copy() (htmltag.TagWrap method)" id="htmltag.TagWrap.copy" ref="index.html#htmltag.TagWrap.copy"/>
+            <keyword name="escape() (htmltag.TagWrap method)" id="htmltag.TagWrap.escape" ref="index.html#htmltag.TagWrap.escape"/>
+            <keyword name="escape() (htmltag.TagWrap method)" id="htmltag.TagWrap.escape" ref="index.html#htmltag.TagWrap.escape"/>
+            <keyword name="escaped (htmltag.HTML attribute)" id="htmltag.HTML.escaped" ref="index.html#htmltag.HTML.escaped"/>
+            <keyword name="HTML (class in htmltag)" id="htmltag.HTML" ref="index.html#htmltag.HTML"/>
+            <keyword name="htmltag (module)" id="module.htmltag" ref="index.html#module-htmltag"/>
+            <keyword name="SelfWrap (class in htmltag)" id="htmltag.SelfWrap" ref="index.html#htmltag.SelfWrap"/>
+            <keyword name="strip_xss() (in module htmltag)" ref="index.html#htmltag.strip_xss"/>
+            <keyword name="TagWrap (class in htmltag)" id="htmltag.TagWrap" ref="index.html#htmltag.TagWrap"/>
+            <keyword name="TagWrap (class in htmltag)" id="htmltag.TagWrap" ref="index.html#htmltag.TagWrap"/>
+            <keyword name="wrap() (htmltag.TagWrap method)" id="htmltag.TagWrap.wrap" ref="index.html#htmltag.TagWrap.wrap"/>
+            <keyword name="wrap() (htmltag.TagWrap method)" id="htmltag.TagWrap.wrap" ref="index.html#htmltag.TagWrap.wrap"/>
+        </keywords>
+        <files>
+            <file>py-modindex.html</file>
+            <file>genindex.html</file>
+            <file>search.html</file>
+            <file>index.html</file>
+            <file>_static/comment-close.png</file>
+            <file>_static/pygments.css</file>
+            <file>_static/ajax-loader.gif</file>
+            <file>_static/comment.png</file>
+            <file>_static/down.png</file>
+            <file>_static/minus.png</file>
+            <file>_static/basic.css</file>
+            <file>_static/file.png</file>
+            <file>_static/up-pressed.png</file>
+            <file>_static/bootstrap-sphinx.css</file>
+            <file>_static/up.png</file>
+            <file>_static/down-pressed.png</file>
+            <file>_static/comment-bright.png</file>
+            <file>_static/plus.png</file>
+            <file>_static/bootstrap-2.3.1/img/glyphicons-halflings-white.png</file>
+            <file>_static/bootstrap-2.3.1/img/glyphicons-halflings.png</file>
+            <file>_static/bootstrap-2.3.1/css/bootstrap.css</file>
+            <file>_static/bootstrap-2.3.1/css/bootstrap-responsive.min.css</file>
+            <file>_static/bootstrap-2.3.1/css/bootstrap.min.css</file>
+            <file>_static/bootstrap-2.3.1/css/bootstrap-responsive.css</file>
+            <file>_modules/htmltag.html</file>
+            <file>_modules/index.html</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

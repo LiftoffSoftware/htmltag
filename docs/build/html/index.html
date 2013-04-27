@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 
@@ -17,7 +16,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -107,7 +106,7 @@
   
   <div class="section" id="htmltag-py-safely-and-intuitively-construct-html-tags">
 <h1>htmltag.py - Safely and intuitively construct HTML tags<a class="headerlink" href="#htmltag-py-safely-and-intuitively-construct-html-tags" title="Permalink to this headline">¶</a></h1>
-<p><em>Module author: Dan McDougall &lt;<a class="reference external" href="mailto:daniel&#46;mcdougall&#37;&#52;&#48;liftoffsoftware&#46;com">daniel<span>&#46;</span>mcdougall<span>&#64;</span>liftoffsoftware<span>&#46;</span>com</a>&gt;</em></p>
+<span style="float:right;"><script data-gittip-username="liftoff" src="https://www.gittip.com/assets/widgets/0002.js"></script></span><p><em>Module author: Dan McDougall &lt;<a class="reference external" href="mailto:daniel&#46;mcdougall&#37;&#52;&#48;liftoffsoftware&#46;com">daniel<span>&#46;</span>mcdougall<span>&#64;</span>liftoffsoftware<span>&#46;</span>com</a>&gt;</em></p>
 <span class="target" id="module-htmltag"></span><div class="section" id="the-htmltag-module">
 <h2>The htmltag module<a class="headerlink" href="#the-htmltag-module" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
@@ -269,7 +268,7 @@ stuff ends up in your program's output.</p>
 <h2>Functions and Classes<a class="headerlink" href="#functions-and-classes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="htmltag.TagWrap">
-<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">TagWrap</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">TagWrap</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#TagWrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.TagWrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lets you wrap whatever string you want in whatever HTML tag (<em>tagname</em>) you
 want.</p>
 <p><strong>Optional Keyword Arguments:</strong></p>
@@ -341,7 +340,7 @@ at once:</p>
 
 <dl class="method">
 <dt id="htmltag.TagWrap.copy">
-<tt class="descname">copy</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap.copy" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">copy</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#TagWrap.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.TagWrap.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new instance of <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> using the given <em>tagname</em> that has
 all the same attributes as this instance.  If <em>kwargs</em> is given they
 will override the attributes of the created instance.</p>
@@ -349,14 +348,14 @@ will override the attributes of the created instance.</p>
 
 <dl class="method">
 <dt id="htmltag.TagWrap.escape">
-<tt class="descname">escape</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap.escape" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">escape</tt><big>(</big><em>string</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#TagWrap.escape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.TagWrap.escape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <em>string</em> with all instances of '&lt;', '&gt;', and '&amp;' converted into
 HTML entities.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="htmltag.TagWrap.wrap">
-<tt class="descname">wrap</tt><big>(</big><em>tag</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.TagWrap.wrap" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">wrap</tt><big>(</big><em>tag</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#TagWrap.wrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.TagWrap.wrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all <em>args</em> (strings) wrapped in HTML tags like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="s">&#39;bold text&#39;</span><span class="p">))</span>
@@ -382,7 +381,7 @@ HTML entities.</p>
 <h2>strip_xss()<a class="headerlink" href="#strip-xss" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="htmltag.strip_xss">
-<tt class="descclassname">htmltag.</tt><tt class="descname">strip_xss</tt><big>(</big><em>html</em>, <em>whitelist=None</em>, <em>replacement='(removed)'</em><big>)</big><a class="headerlink" href="#htmltag.strip_xss" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">htmltag.</tt><tt class="descname">strip_xss</tt><big>(</big><em>html</em>, <em>whitelist=None</em>, <em>replacement='(removed)'</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#strip_xss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.strip_xss" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function returns a tuple containing:</p>
 <blockquote>
 <div><ul class="simple">
@@ -443,22 +442,23 @@ find something we missed.</p>
 <h2>HTML()<a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="htmltag.HTML">
-<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">HTML</tt><a class="headerlink" href="#htmltag.HTML" title="Permalink to this definition">¶</a></dt>
-<dd><p class="versionadded">
-<span class="versionmodified">New in version 1.2.0.</span></p>
+<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">HTML</tt><a class="reference internal" href="_modules/htmltag.html#HTML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.HTML" title="Permalink to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<p><span>New in version 1.2.0.</span></p>
+</div>
 <p>A subclass of Python's built-in <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">str</span></tt></a> to add a simple <a class="reference internal" href="#htmltag.HTML.__html__" title="htmltag.HTML.__html__"><tt class="xref py py-obj docutils literal"><span class="pre">__html__</span></tt></a> method
 that lets us know this string is HTML and does not need to be escaped.  It
 also has an <a class="reference internal" href="#htmltag.HTML.escaped" title="htmltag.HTML.escaped"><tt class="xref py py-obj docutils literal"><span class="pre">escaped</span></tt></a> property that will return <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> with all special
 characters converted into HTML entities.</p>
 <dl class="method">
 <dt id="htmltag.HTML.__html__">
-<tt class="descname">__html__</tt><big>(</big><big>)</big><a class="headerlink" href="#htmltag.HTML.__html__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__html__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/htmltag.html#HTML.__html__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.HTML.__html__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> (we're already a string) in unmodified form.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="htmltag.HTML.append">
-<tt class="descname">append</tt><big>(</big><em>*strings</em><big>)</big><a class="headerlink" href="#htmltag.HTML.append" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">append</tt><big>(</big><em>*strings</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#HTML.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.HTML.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds any number of supplied <em>strings</em> to <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> (we're a subclass of
 <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">str</span></tt></a> remember) just before the last closing tag and returns a new
 instance of <a class="reference internal" href="#htmltag.HTML" title="htmltag.HTML"><tt class="xref py py-obj docutils literal"><span class="pre">HTML</span></tt></a> with the result.
@@ -489,7 +489,7 @@ of <a class="reference external" href="http://docs.python.org/library/functions.
 
 <dl class="attribute">
 <dt id="htmltag.HTML.escaped">
-<tt class="descname">escaped</tt><a class="headerlink" href="#htmltag.HTML.escaped" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">escaped</tt><a class="reference internal" href="_modules/htmltag.html#HTML.escaped"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.HTML.escaped" title="Permalink to this definition">¶</a></dt>
 <dd><p>A property that returns <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> with all characters that have special
 meaning (in HTML/XML) replaced with HTML entities.  Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s">&#39;&lt;span&gt;These span tags will be escaped&lt;/span&gt;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">escaped</span><span class="p">)</span>
@@ -505,7 +505,7 @@ meaning (in HTML/XML) replaced with HTML entities.  Example:</p>
 <h2>TagWrap()<a class="headerlink" href="#tagwrap" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt>
-<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">TagWrap</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big></dt>
+<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">TagWrap</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#TagWrap"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Lets you wrap whatever string you want in whatever HTML tag (<em>tagname</em>) you
 want.</p>
 <p><strong>Optional Keyword Arguments:</strong></p>
@@ -571,7 +571,7 @@ at once:</p>
 </div>
 <dl class="method">
 <dt>
-<tt class="descname">copy</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big></dt>
+<tt class="descname">copy</tt><big>(</big><em>tagname</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#TagWrap.copy"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Returns a new instance of <a class="reference internal" href="#htmltag.TagWrap" title="htmltag.TagWrap"><tt class="xref py py-obj docutils literal"><span class="pre">TagWrap</span></tt></a> using the given <em>tagname</em> that has
 all the same attributes as this instance.  If <em>kwargs</em> is given they
 will override the attributes of the created instance.</p>
@@ -579,14 +579,14 @@ will override the attributes of the created instance.</p>
 
 <dl class="method">
 <dt>
-<tt class="descname">escape</tt><big>(</big><em>string</em><big>)</big></dt>
+<tt class="descname">escape</tt><big>(</big><em>string</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#TagWrap.escape"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Returns <em>string</em> with all instances of '&lt;', '&gt;', and '&amp;' converted into
 HTML entities.</p>
 </dd></dl>
 
 <dl class="method">
 <dt>
-<tt class="descname">wrap</tt><big>(</big><em>tag</em>, <em>*args</em>, <em>**kwargs</em><big>)</big></dt>
+<tt class="descname">wrap</tt><big>(</big><em>tag</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#TagWrap.wrap"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Returns all <em>args</em> (strings) wrapped in HTML tags like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">TagWrap</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">(</span><span class="s">&#39;bold text&#39;</span><span class="p">))</span>
@@ -612,7 +612,7 @@ HTML entities.</p>
 <h2>SelfWrap()<a class="headerlink" href="#selfwrap" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="htmltag.SelfWrap">
-<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">SelfWrap</tt><big>(</big><em>tagname</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#htmltag.SelfWrap" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">SelfWrap</tt><big>(</big><em>tagname</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#SelfWrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.SelfWrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class is the magic that lets us do things like:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">span</span>
 </pre></div>
@@ -639,8 +639,8 @@ HTML entities.</p>
       
     </p>
     <p>
-        &copy; Copyright 2011, Liftoff Software Corporation.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+        &copy; Copyright 2013, Liftoff Software Corporation.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2b1.<br/>
     </p>
   </div>
 </footer>

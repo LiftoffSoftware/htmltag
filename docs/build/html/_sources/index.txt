@@ -1,6 +1,10 @@
 htmltag.py - Safely and intuitively construct HTML tags
 =======================================================
 
+.. raw:: html
+
+    <span style="float:right;"><script data-gittip-username="liftoff" src="https://www.gittip.com/assets/widgets/0002.js"></script></span>
+
 .. moduleauthor:: Dan McDougall <daniel.mcdougall@liftoffsoftware.com>
 
 .. automodule:: htmltag

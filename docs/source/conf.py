@@ -46,7 +46,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'htmltag'
-copyright = u'2011, Liftoff Software Corporation'
+copyright = u'2013, Liftoff Software Corporation'
 
 import htmltag # So we can grab the version
 # The version info for the project you're documenting, acts as replacement for
@@ -105,6 +105,8 @@ pygments_style = 'trac'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #html_theme_options = {}
+
+# <span style="float:right;"><script data-gittip-username="liftoff" src="https://www.gittip.com/assets/widgets/0002.js"></script></span>
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme = 'bootstrap'

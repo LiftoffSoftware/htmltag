@@ -1,0 +1,16 @@
+\indexentry{htmltag (module)|hyperpage}{1}
+\indexentry{TagWrap (class in htmltag)|hyperpage}{7}
+\indexentry{\_\_weakref\_\_ (htmltag.TagWrap attribute)|hyperpage}{8}
+\indexentry{copy() (htmltag.TagWrap method)|hyperpage}{8}
+\indexentry{escape() (htmltag.TagWrap method)|hyperpage}{8}
+\indexentry{wrap() (htmltag.TagWrap method)|hyperpage}{8}
+\indexentry{strip\_xss() (in module htmltag)|hyperpage}{9}
+\indexentry{HTML (class in htmltag)|hyperpage}{11}
+\indexentry{\_\_html\_\_() (htmltag.HTML method)|hyperpage}{11}
+\indexentry{append() (htmltag.HTML method)|hyperpage}{11}
+\indexentry{escaped (htmltag.HTML attribute)|hyperpage}{11}
+\indexentry{TagWrap (class in htmltag)|hyperpage}{13}
+\indexentry{copy() (htmltag.TagWrap method)|hyperpage}{14}
+\indexentry{escape() (htmltag.TagWrap method)|hyperpage}{14}
+\indexentry{wrap() (htmltag.TagWrap method)|hyperpage}{14}
+\indexentry{SelfWrap (class in htmltag)|hyperpage}{15}
