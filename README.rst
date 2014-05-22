@@ -6,7 +6,7 @@ The htmltag module
     http://liftoff.github.io/htmltag/
 
     The latest version of this module can be obtained from Github:
-    http://liftoff.github.io/htmltag/
+    https://github.com/LiftoffSoftware/htmltag
 
 htmltag.py - A Python (2 *and* 3) module for wrapping whatever strings you want
 in HTML tags. Example::
