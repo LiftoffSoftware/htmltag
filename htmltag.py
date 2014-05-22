@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 #
-#       Copyright 2013 Liftoff Software Corporation
+#       Copyright 2014 Liftoff Software Corporation
 #
 # For license information see LICENSE.txt
+from __future__ import unicode_literals
 
 # Meta
-__version__ = '1.5'
-__version_info__ = (1, 5)
+__version__ = '1.6'
+__version_info__ = (1, 6)
 __license__ = "Apache 2.0"
 __author__ = 'Dan McDougall <daniel.mcdougall@liftoffsoftware.com>'
+
+# NOTE: The doctests only pass in Python 3 due to the missing u'' syntax.
 
 __doc__ = """\
 The htmltag module
@@ -19,7 +22,7 @@ The htmltag module
     http://liftoff.github.io/htmltag/
 
     The latest version of this module can be obtained from Github:
-    http://liftoff.github.io/htmltag/
+    https://github.com/LiftoffSoftware/htmltag
 
 htmltag.py - A Python (2 *and* 3) module for wrapping whatever strings you want
 in HTML tags. Example::
@@ -97,10 +100,10 @@ attribute::
 
     >>> from htmltag import foo_bar
     >>> print(foo_bar('baz')) # Before
-    '<foo_bar>baz</foo_bar>'
+    <foo_bar>baz</foo_bar>
     >>> foo_bar.tagname = 'foo-bar'
-    >>> print(foo_bar('baz')) # Before
-    '<foo-bar>baz</foo-bar>'
+    >>> print(foo_bar('baz')) # After
+    <foo-bar>baz</foo-bar>
 
 By default self-closing HTML tags like '<img>' will not include an ending slash.
 To change this behavior (i.e. for XHTML) just set 'ending_slash' to `True`::
@@ -176,6 +179,11 @@ Functions and Classes
 
 import sys, re, cgi, logging
 from types import ModuleType
+
+if sys.version_info.major == 2:
+    stringtype = unicode
+else: # Python 3
+    stringtype = str
 
 self_closing_tags = set([
     'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input',
@@ -291,7 +299,7 @@ def strip_xss(html, whitelist=None, replacement="(removed)"):
             html = html.replace(bad_tag, replacement)
     return (html, bad_tags)
 
-class HTML(str):
+class HTML(stringtype):
     """
     .. versionadded:: 1.2.0
 

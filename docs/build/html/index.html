@@ -5,19 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>htmltag.py - Safely and intuitively construct HTML tags &mdash; htmltag 1.5 documentation</title>
+    <title>htmltag.py - Safely and intuitively construct HTML tags &mdash; htmltag 1.6 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootstrap-2.3.1/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/2.3.1/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootstrap-2.3.1/css/bootstrap-responsive.min.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.5',
+        VERSION:     '1.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,11 +24,11 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-2.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="htmltag 1.5 documentation" href="#" />
+    <link rel="top" title="htmltag 1.6 documentation" href="#" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -38,34 +36,46 @@
 
   </head>
   <body>
-<div class="container">
-  
-  <div id="navbar" class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
 
-      <a class="brand" href="#">htmltag</a>
-      <span class="navbar-text pull-left"><b>1.5</b></span>
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          htmltag</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.6</b></span>
+      </div>
 
-      <div class="nav-collapse">
-        <ul class="nav">
-          <li class="divider-vertical"></li>
-          
-            <li class="dropdown globaltoc-container">
-  <a href="#"
-     class="dropdown-toggle"
-     data-toggle="dropdown">Site <b class="caret"></b></a>
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Site <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
-    ></ul>
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
 </li>
-            <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"><ul>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">htmltag.py - Safely and intuitively construct HTML tags</a><ul>
 <li><a class="reference internal" href="#the-htmltag-module">The htmltag module</a><ul>
 <li><a class="reference internal" href="#combining-tags-and-content">Combining Tags and Content</a></li>
@@ -84,26 +94,36 @@
 </ul>
 </ul>
 </li>
-          
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
           
             
-          
-          
-        </ul>
-
-        
-          
-<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
-  <input type="text" name="q" placeholder="Search" />
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
   <input type="hidden" name="check_keywords" value="yes" />
   <input type="hidden" name="area" value="default" />
 </form>
-        
-      </div>
+          
+        </div>
     </div>
   </div>
 
-  
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <div class="section" id="htmltag-py-safely-and-intuitively-construct-html-tags">
 <h1>htmltag.py - Safely and intuitively construct HTML tags<a class="headerlink" href="#htmltag-py-safely-and-intuitively-construct-html-tags" title="Permalink to this headline">¶</a></h1>
 <span style="float:right;"><script data-gittip-username="liftoff" src="https://www.gittip.com/assets/widgets/0002.js"></script></span><p><em>Module author: Dan McDougall &lt;<a class="reference external" href="mailto:daniel&#46;mcdougall&#37;&#52;&#48;liftoffsoftware&#46;com">daniel<span>&#46;</span>mcdougall<span>&#64;</span>liftoffsoftware<span>&#46;</span>com</a>&gt;</em></p>
@@ -114,7 +134,7 @@
 <p>The latest, complete documentation of htmltag can be found here:
 <a class="reference external" href="http://liftoff.github.io/htmltag/">http://liftoff.github.io/htmltag/</a></p>
 <p class="last">The latest version of this module can be obtained from Github:
-<a class="reference external" href="http://liftoff.github.io/htmltag/">http://liftoff.github.io/htmltag/</a></p>
+<a class="reference external" href="https://github.com/LiftoffSoftware/htmltag">https://github.com/LiftoffSoftware/htmltag</a></p>
 </div>
 <p>htmltag.py - A Python (2 <em>and</em> 3) module for wrapping whatever strings you want
 in HTML tags. Example:</p>
@@ -189,10 +209,10 @@ need to create a tag like that just use an underscore and change its 'tagname'
 attribute:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">htmltag</span> <span class="kn">import</span> <span class="n">foo_bar</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">foo_bar</span><span class="p">(</span><span class="s">&#39;baz&#39;</span><span class="p">))</span> <span class="c"># Before</span>
-<span class="go">&#39;&lt;foo_bar&gt;baz&lt;/foo_bar&gt;&#39;</span>
+<span class="go">&lt;foo_bar&gt;baz&lt;/foo_bar&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">foo_bar</span><span class="o">.</span><span class="n">tagname</span> <span class="o">=</span> <span class="s">&#39;foo-bar&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">foo_bar</span><span class="p">(</span><span class="s">&#39;baz&#39;</span><span class="p">))</span> <span class="c"># Before</span>
-<span class="go">&#39;&lt;foo-bar&gt;baz&lt;/foo-bar&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">foo_bar</span><span class="p">(</span><span class="s">&#39;baz&#39;</span><span class="p">))</span> <span class="c"># After</span>
+<span class="go">&lt;foo-bar&gt;baz&lt;/foo-bar&gt;</span>
 </pre></div>
 </div>
 <p>By default self-closing HTML tags like '&lt;img&gt;' will not include an ending slash.
@@ -381,7 +401,7 @@ HTML entities.</p>
 <h2>strip_xss()<a class="headerlink" href="#strip-xss" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="htmltag.strip_xss">
-<tt class="descclassname">htmltag.</tt><tt class="descname">strip_xss</tt><big>(</big><em>html</em>, <em>whitelist=None</em>, <em>replacement='(removed)'</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#strip_xss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.strip_xss" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">htmltag.</tt><tt class="descname">strip_xss</tt><big>(</big><em>html</em>, <em>whitelist=None</em>, <em>replacement=u'(removed)'</em><big>)</big><a class="reference internal" href="_modules/htmltag.html#strip_xss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.strip_xss" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function returns a tuple containing:</p>
 <blockquote>
 <div><ul class="simple">
@@ -444,7 +464,7 @@ find something we missed.</p>
 <dt id="htmltag.HTML">
 <em class="property">class </em><tt class="descclassname">htmltag.</tt><tt class="descname">HTML</tt><a class="reference internal" href="_modules/htmltag.html#HTML"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.HTML" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span>New in version 1.2.0.</span></p>
+<p><span class="versionmodified">New in version 1.2.0.</span></p>
 </div>
 <p>A subclass of Python's built-in <a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">str</span></tt></a> to add a simple <a class="reference internal" href="#htmltag.HTML.__html__" title="htmltag.HTML.__html__"><tt class="xref py py-obj docutils literal"><span class="pre">__html__</span></tt></a> method
 that lets us know this string is HTML and does not need to be escaped.  It
@@ -454,6 +474,12 @@ characters converted into HTML entities.</p>
 <dt id="htmltag.HTML.__html__">
 <tt class="descname">__html__</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/htmltag.html#HTML.__html__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#htmltag.HTML.__html__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns <tt class="xref py py-obj docutils literal"><span class="pre">self</span></tt> (we're already a string) in unmodified form.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="htmltag.HTML.__weakref__">
+<tt class="descname">__weakref__</tt><a class="headerlink" href="#htmltag.HTML.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
 </dd></dl>
 
 <dl class="method">
@@ -631,6 +657,9 @@ HTML entities.</p>
 </div>
 
 
+    </div>
+      
+  </div>
 </div>
 <footer class="footer">
   <div class="container">
@@ -640,7 +669,7 @@ HTML entities.</p>
     </p>
     <p>
         &copy; Copyright 2013, Liftoff Software Corporation.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2b1.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
     </p>
   </div>
 </footer>
