@@ -6,8 +6,8 @@
 from __future__ import unicode_literals
 
 # Meta
-__version__ = '1.6'
-__version_info__ = (1, 6)
+__version__ = '1.7'
+__version_info__ = (1, 7)
 __license__ = "Apache 2.0"
 __author__ = 'Dan McDougall <daniel.mcdougall@liftoffsoftware.com>'
 
