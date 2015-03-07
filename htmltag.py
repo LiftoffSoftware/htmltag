@@ -480,8 +480,13 @@ class TagWrap(object):
             tagstart += ' '
             for key, value in kwargs.items():
                 key = key.lstrip('_')
-                tagstart = tagstart + '{key}="{value}" '.format(
-                    key=key, value=value)
+                if value == True:
+                    tagstart = tagstart + key + ' '
+                elif value == False:
+                    continue # skip it altogether
+                else:
+                    tagstart = tagstart + '{key}="{value}" '.format(
+                        key=key, value=value)
             tagstart = tagstart.rstrip()
         html = template.format(tagstart=tagstart, content=content, tag=tag)
         if self.safe_mode:
